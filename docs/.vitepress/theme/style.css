@@ -137,6 +137,94 @@
   }
 }
 
+/**
+ * VitePress pulls the hero image into the nav (negative margin, square slot).
+ * The mosaic is 3 / 4, so it covered the wordmark on phones.
+ */
+@media (max-width: 959px) {
+  .VPNavBar.home {
+    background-color: var(--vp-nav-bg-color);
+  }
+
+  .VPNavBar .container > .title {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  .VPHero.has-image .main {
+    order: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .VPHero.has-image .image {
+    order: 2;
+    margin: 28px auto 0;
+  }
+
+  .VPHero.has-image .image-container {
+    width: min(220px, 58vw);
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+
+  .VPHero .image-container .hero-motion {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
+
+  .VPHero.has-image .container {
+    max-width: 100%;
+  }
+
+  .VPHero.has-image .heading,
+  .VPHero.has-image .actions {
+    width: 100%;
+    max-width: calc(100vw - 48px);
+  }
+
+  .VPHero.has-image .heading .name,
+  .VPHero.has-image .heading .text,
+  .VPHero.has-image p.tagline {
+    width: auto !important;
+    max-width: calc(100vw - 48px) !important;
+    white-space: normal !important;
+  }
+
+  .VPHero.has-image .actions {
+    justify-content: center;
+  }
+
+  .VPLocalNav .container {
+    gap: 8px;
+  }
+
+  .VPLocalNav .VPLocalNavOutlineDropdown {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  .VPLocalNav .VPLocalNavOutlineDropdown .menu-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 399px) {
+  .VPHero.has-image .image-container {
+    width: min(196px, 68vw);
+  }
+}
+
+html:has(.VPHome) {
+  overflow-x: clip;
+}
+
 .motion-demo {
   margin: 0;
 }
@@ -297,6 +385,7 @@
 
 .vp-doc {
   --vp-header-anchor-symbol: '#';
+  overflow-wrap: break-word;
 }
 
 .vp-doc .header-anchor {
