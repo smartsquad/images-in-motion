@@ -25,14 +25,14 @@ jobs:
         with:
           bun-version: latest
       - name: Cache VitePress
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: docs/.vitepress/cache
           key: ${{ runner.os }}-vitepress-${{ hashFiles('docs/**', 'bun.lock', 'src/**') }}
           restore-keys: |
             ${{ runner.os }}-vitepress-
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Install
         run: bun install --frozen-lockfile
       - name: Build docs
