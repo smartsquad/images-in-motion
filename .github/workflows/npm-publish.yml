@@ -3,6 +3,10 @@ name: Publish to npm
 on:
   release:
     types: [published]
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -54,14 +58,21 @@ jobs:
         run: npm install -g npm@^11.5.1
       - name: Install
         run: bun install --frozen-lockfile
-      - name: Verify the release tag matches package.json
+      - name: Verify the tag matches package.json
+        if: github.ref_type == 'tag'
         run: |
           root="$(node -p "require('./package.json').version")"
           tag="${GITHUB_REF_NAME#v}"
-          test "$root" = "$tag" || { echo "release tag '$tag' != package version '$root'"; exit 1; }
+          test "$root" = "$tag" || { echo "tag '$tag' != package version '$root'"; exit 1; }
       # Trusted publishing (OIDC): configure the trusted publisher on npmjs.com.
       # NPM_TOKEN is optional fallback when a trusted publisher is not set.
       - name: Publish images-in-motion to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --access public
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if npm view "images-in-motion@${version}" version >/dev/null 2>&1; then
+            echo "images-in-motion@${version} is already on npm"
+            exit 0
+          fi
+          npm publish --access public

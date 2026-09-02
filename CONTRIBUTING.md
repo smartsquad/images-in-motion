@@ -49,9 +49,18 @@ The documentation site and the studio deploy from `main` via `.github/workflows/
 
 VitePress `base` is `/` locally and in production.
 
+## GitHub Release
+
+1. Move `[Unreleased]` entries under `## [X.Y.Z] - YYYY-MM-DD` in `CHANGELOG.md`.
+2. Set `package.json` version to `X.Y.Z`.
+3. Commit on `main` and push.
+4. Tag that commit and push the tag: `git tag vX.Y.Z && git push origin vX.Y.Z`.
+
+`.github/workflows/release.yml` runs on `vX.Y.Z` tags whose commit is on `main`. It checks that the tag matches `package.json`, takes notes from the changelog section, and creates the GitHub Release.
+
 ## npm publish
 
-A GitHub Release whose tag is `v` plus the `package.json` version (for example `v0.2.2`) runs `.github/workflows/npm-publish.yml`. That workflow re-runs validate, then publishes `images-in-motion` to npmjs.
+Pushing the version tag is enough. `.github/workflows/release.yml` creates the GitHub Release. `.github/workflows/npm-publish.yml` also runs on that tag (and on a published release). It re-runs validate, then publishes `images-in-motion` to npmjs. GitHub does not start a second workflow from a release created with `GITHUB_TOKEN`, so npm publish listens to the tag, not only to the release event.
 
 Preferred: [trusted publishing](https://docs.npmjs.com/trusted-publishers) (OIDC). No token in the repository. On npmjs.com, add a trusted publisher for package `images-in-motion`: GitHub organization `smartsquad`, repository `images-in-motion`, workflow filename `npm-publish.yml`.
 

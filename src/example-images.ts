@@ -340,9 +340,10 @@ export function pickExampleImages(count = 24): { category: TExampleImageCategory
   const unique = [...new Set(EExampleImageCategories[category])]
   const images = shuffle(unique).slice(0, wanted)
   if (images.length < wanted) {
-    const extras = shuffle(
-      Object.values(EExampleImageCategories).flat().filter((url) => !images.includes(url)),
-    )
+    const taken = new Set(images)
+    const extras = shuffle([
+      ...new Set(Object.values(EExampleImageCategories).flat().filter((url) => !taken.has(url))),
+    ])
     images.push(...extras.slice(0, wanted - images.length))
   }
   return { category, images }

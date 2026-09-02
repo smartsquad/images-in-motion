@@ -26,13 +26,15 @@ describe('example images', () => {
   })
 
   it('picks a category and at least twenty-four unique urls', () => {
-    const picked = pickExampleImages(24)
-    expect(EExampleImageCategoryNames).toContain(picked.category)
-    expect(picked.images.length).toBeGreaterThanOrEqual(24)
-    expect(new Set(picked.images).size).toBe(picked.images.length)
-    const ids = photoIds(picked.images)
-    for (const banned of EBannedExamplePhotoIds) {
-      expect(ids).not.toContain(banned)
+    for (let index = 0; index < 80; index += 1) {
+      const picked = pickExampleImages(24)
+      expect(EExampleImageCategoryNames).toContain(picked.category)
+      expect(picked.images.length).toBeGreaterThanOrEqual(24)
+      expect(new Set(picked.images).size).toBe(picked.images.length)
+      const ids = photoIds(picked.images)
+      for (const banned of EBannedExamplePhotoIds) {
+        expect(ids).not.toContain(banned)
+      }
     }
   })
 })
