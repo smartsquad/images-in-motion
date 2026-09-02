@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="Images in motion">
+  <title>Images in motion · dark rounded Phase Cuts mark</title>
+  <rect width="1024" height="1024" rx="192" fill="#141313"/>
+  <g fill="#A59050">
+    <rect x="160" y="128" width="192" height="320" rx="32"/>
+    <rect x="160" y="512" width="192" height="384" rx="32"/>
+    <rect x="672" y="128" width="192" height="512" rx="32"/>
+    <rect x="672" y="704" width="192" height="192" rx="32"/>
+  </g>
+  <g fill="#F3EFE8">
+    <rect x="416" y="128" width="192" height="128" rx="32"/>
+    <rect x="416" y="320" width="192" height="576" rx="32"/>
+  </g>
+</svg>

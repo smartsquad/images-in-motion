@@ -1,0 +1,67 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install
+        run: bun install --frozen-lockfile
+      - name: Test
+        run: bun run test
+      - name: Typecheck
+        run: bun run typecheck
+      - name: Lint
+        run: bun run lint
+      - name: Build library
+        run: bun run build
+      - name: Smoke built package
+        run: bun run test:dist
+      - name: Build studio
+        run: bun run build:studio
+      - name: Build docs
+        run: bun run docs:build
+
+  publish:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      # OIDC trusted publishing needs npm >= 11.5.1.
+      - name: Use an OIDC-capable npm
+        run: npm install -g npm@^11.5.1
+      - name: Install
+        run: bun install --frozen-lockfile
+      - name: Verify the release tag matches package.json
+        run: |
+          root="$(node -p "require('./package.json').version")"
+          tag="${GITHUB_REF_NAME#v}"
+          test "$root" = "$tag" || { echo "release tag '$tag' != package version '$root'"; exit 1; }
+      # Trusted publishing (OIDC): configure the trusted publisher on npmjs.com.
+      # NPM_TOKEN is optional fallback when a trusted publisher is not set.
+      - name: Publish images-in-motion to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public

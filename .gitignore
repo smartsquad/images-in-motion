@@ -1,0 +1,30 @@
+.DS_Store
+.turbo/
+.vite/
+*.log
+
+coverage/
+node_modules/
+
+studio/dist/
+dist/
+
+# LLMs related
+.anthropic/
+.claude/
+.cursor/
+.deepseek/
+.firecrawl/
+.gemini/
+.google/
+.grok/
+.groq/
+.mistral/
+.openai/
+.perplexity/
+.qwen/
+
+# VitePress (docs plus leftover root cache)
+**/.vitepress/cache
+**/.vitepress/dist
+docs/public/images-in-motion.global.js

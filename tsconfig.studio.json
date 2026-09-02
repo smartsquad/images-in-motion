@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["vite/client"],
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "images-in-motion/react": ["src/react/index.ts"],
+      "images-in-motion/core": ["src/core/index.ts"]
+    }
+  },
+  "include": ["studio", "src"]
+}

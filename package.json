@@ -1,0 +1,119 @@
+{
+  "name": "images-in-motion",
+  "version": "0.2.2",
+  "description": "Independent columns, opposite directions: a continuous animated image pattern for the web.",
+  "license": "MIT",
+  "author": "Smart Squad S.r.l. (https://smartsquad.io)",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "sideEffects": [
+    "./dist/js/index.js",
+    "./dist/iife/images-in-motion.global.js"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartsquad/images-in-motion.git"
+  },
+  "homepage": "https://smartsquad.github.io/images-in-motion/",
+  "bugs": {
+    "url": "https://github.com/smartsquad/images-in-motion/issues"
+  },
+  "keywords": [
+    "animation",
+    "background",
+    "css",
+    "motion",
+    "pattern",
+    "react",
+    "vue",
+    "web-component"
+  ],
+  "main": "./dist/js/index.js",
+  "module": "./dist/js/index.js",
+  "types": "./dist/js/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/js/index.d.ts",
+      "import": "./dist/js/index.js",
+      "default": "./dist/js/index.js"
+    },
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js"
+    },
+    "./vue": {
+      "types": "./dist/vue/index.d.ts",
+      "import": "./dist/vue/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "unpkg": "./dist/iife/images-in-motion.global.js",
+  "jsdelivr": "./dist/iife/images-in-motion.global.js",
+  "peerDependencies": {
+    "react": ">=18",
+    "vue": ">=3.4"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "dev": "vitepress dev docs --host 127.0.0.1 --port 5173",
+    "build": "tsup && tsc -p tsconfig.build.json --emitDeclarationOnly",
+    "size": "bun run build && bun scripts/bundle-size.ts",
+    "build:studio": "vite build --config studio/vite.config.ts",
+    "studio:dev": "vite --config studio/vite.config.ts",
+    "studio:preview": "vite preview --config studio/vite.config.ts",
+    "og:dev": "vite --config assets/og/vite.config.ts",
+    "preview": "vitepress preview docs --host 127.0.0.1 --port 5173",
+    "test": "vitest run",
+    "test:dist": "vitest run --config vitest.dist.config.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.studio.json",
+    "prepublishOnly": "bun run test && bun run typecheck && bun run build && bun run test:dist",
+    "docs:dev": "vitepress dev docs --host 127.0.0.1 --port 5173",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs --host 127.0.0.1 --port 5173"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9",
+    "@stackblitz/sdk": "^1.11.1",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "eslint": "^9",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-vue": "^10.10.0",
+    "globals": "^17.12.0",
+    "gsap": "^3.15.0",
+    "happy-dom": "^18.0.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.69.0",
+    "vite": "^7.1.5",
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-group-icons": "^1.7.6",
+    "vitepress-plugin-llms": "^1.13.5",
+    "vitest": "^3.2.4",
+    "vue": "^3.5.21"
+  }
+}
