@@ -35,6 +35,8 @@ jobs:
         uses: actions/configure-pages@v6
       - name: Install
         run: bun install --frozen-lockfile
+      - name: Build library
+        run: bun run build
       - name: Build docs
         run: bun run docs:build
       - name: Upload Pages artifact

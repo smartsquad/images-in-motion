@@ -7,6 +7,7 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Changed
 
 - Pointed the docs site and studio to `https://iim.smartsquad.io/`
+- Built the library in the Pages workflow so the hosted IIFE is published with the docs
 
 ### Added
 
