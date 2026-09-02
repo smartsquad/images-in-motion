@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Changed
+
+- Pointed the docs site and studio to `https://iim.smartsquad.io/`
+
 ### Added
 
 - Imported the first release from the private repository of `images-in-motion`

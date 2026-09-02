@@ -1,6 +1,6 @@
 export const EGithubRepo = 'smartsquad/images-in-motion'
 
-export const EDocsHostedIife = 'https://smartsquad.github.io/images-in-motion/images-in-motion.global.js'
+export const EDocsHostedIife = 'https://iim.smartsquad.io/images-in-motion.global.js'
 
 export const EWebPlaygroundIds = ['react', 'vue', 'javascript', 'element'] as const
 

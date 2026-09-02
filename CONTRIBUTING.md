@@ -42,12 +42,12 @@ Local docs (`bun dev` or `bun run docs:dev`) are served at `http://127.0.0.1:517
 
 ## GitHub Pages
 
-The documentation site and the studio deploy from `main` via `.github/workflows/pages.yml`. Enable Pages on the repository: **Settings → Pages → Source → GitHub Actions**.
+The documentation site and the studio deploy from `main` via `.github/workflows/pages.yml`. Enable Pages on the repository: **Settings → Pages → Source → GitHub Actions**. Custom domain: `iim.smartsquad.io` (CNAME to `smartsquad.github.io`, DNS only).
 
-- Site: `https://smartsquad.github.io/images-in-motion/`
-- Studio: `https://smartsquad.github.io/images-in-motion/studio/`
+- Site: `https://iim.smartsquad.io/`
+- Studio: `https://iim.smartsquad.io/studio/`
 
-Local VitePress uses `/`. GitHub Pages keeps the `/images-in-motion/` prefix because the repo is a project site.
+VitePress `base` is `/` locally and in production.
 
 ## npm publish
 
@@ -76,7 +76,7 @@ Web playgrounds alias `images-in-motion` to `src/` (`vite.config.ts`).
 
 Shared demo images live in `docs/playgrounds/shared/images.ts` (verified Unsplash IDs only).
 
-Expo Snack does not import `images-in-motion`. It inlines WebView HTML and loads the docs-hosted IIFE (`https://smartsquad.github.io/images-in-motion/images-in-motion.global.js`). After `bun run build`, `docs:dev` and `docs:build` copy `dist/iife/images-in-motion.global.js` to `docs/public/`. That file is gitignored. Do not point Snack at Snack web preview as the mosaic runtime. Snack web uses react-native-web for the app shell.
+Expo Snack does not import `images-in-motion`. It inlines WebView HTML and loads the docs-hosted IIFE (`https://iim.smartsquad.io/images-in-motion.global.js`). After `bun run build`, `docs:dev` and `docs:build` copy `dist/iife/images-in-motion.global.js` to `docs/public/`. That file is gitignored. Do not point Snack at Snack web preview as the mosaic runtime. Snack web uses react-native-web for the app shell.
 
 NativeScript has no in-browser mosaic. Keep the CTA on `https://nativescript.new/typescript` and `https://preview.nativescript.org/`. Do not invent a Playground URL. The classic Playground is retired.
 

@@ -10,8 +10,8 @@ import llmsVitePlugin, { copyOrDownloadAsMarkdownButtons } from 'vitepress-plugi
 import { version } from '../../package.json'
 import { frameworkNavItems, frameworkSidebarItems } from './frameworks'
 
-const EPagesBase = '/images-in-motion/'
-const EBase = process.env.GITHUB_ACTIONS === 'true' ? EPagesBase : '/'
+const ESiteOrigin = 'https://iim.smartsquad.io'
+const EBase = '/'
 const EPublicAsset = (file: string) => `${EBase}${file}`
 const ESrc = (relative: string) => fileURLToPath(new URL(relative, import.meta.url))
 
@@ -46,8 +46,8 @@ export default defineConfig({
     ['link', { rel: 'icon', href: EPublicAsset('favicon-dark.svg'), type: 'image/svg+xml', media: '(prefers-color-scheme: dark)' }],
     ['meta', { property: 'og:title', content: 'Images in motion' }],
     ['meta', { property: 'og:description', content: 'Independent columns. Opposite directions. A continuous image pattern for the web.' }],
-    ['meta', { property: 'og:image', content: 'https://smartsquad.github.io/images-in-motion/og.png' }],
-    ['meta', { name: 'twitter:image', content: 'https://smartsquad.github.io/images-in-motion/og.png' }],
+    ['meta', { property: 'og:image', content: `${ESiteOrigin}/og.png` }],
+    ['meta', { name: 'twitter:image', content: `${ESiteOrigin}/og.png` }],
   ],
   markdown: {
     config(md) {

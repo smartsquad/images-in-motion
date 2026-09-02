@@ -41,7 +41,7 @@ bun run studio:dev
 bun run og:dev
 ```
 
-`bun dev` is the VitePress site (docs, examples, embedded studio) at `http://127.0.0.1:5173/`. `docs:dev` is the same command. Do not point `dev` at the standalone studio Vite app. Standalone 01 / MOTION STUDY chrome is `bun run studio:dev` at `http://127.0.0.1:4179/`. GitHub Pages uses `/images-in-motion/`. OG frames: `bun run og:dev` at `http://127.0.0.1:4180/`.
+`bun dev` is the VitePress site (docs, examples, embedded studio) at `http://127.0.0.1:5173/`. `docs:dev` is the same command. Do not point `dev` at the standalone studio Vite app. Standalone 01 / MOTION STUDY chrome is `bun run studio:dev` at `http://127.0.0.1:4179/`. Production docs: `https://iim.smartsquad.io/` (`base: /`). OG frames: `bun run og:dev` at `http://127.0.0.1:4180/`.
 
 ## Learned User Preferences
 

@@ -16,7 +16,7 @@ const iimOptions = {
   angle: 12,
 }
 
-const scriptSrc = 'https://smartsquad.github.io/images-in-motion/images-in-motion.global.js'
+const scriptSrc = 'https://iim.smartsquad.io/images-in-motion.global.js'
 
 function escapeScriptSrc(src: string): string {
   return src.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')

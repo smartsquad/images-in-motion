@@ -14,8 +14,8 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/images-in-motion"><img src="https://img.shields.io/npm/v/images-in-motion?style=flat-square" alt="npm" /></a>
-  <a href="https://smartsquad.github.io/images-in-motion/"><img src="https://img.shields.io/badge/Docs-GitHub_Pages-111827?style=flat-square" alt="Documentation" /></a>
-  <a href="https://smartsquad.github.io/images-in-motion/studio/"><img src="https://img.shields.io/badge/Studio-GitHub_Pages-111827?style=flat-square" alt="Live studio" /></a>
+  <a href="https://iim.smartsquad.io/"><img src="https://img.shields.io/badge/Docs-iim.smartsquad.io-111827?style=flat-square" alt="Documentation" /></a>
+  <a href="https://iim.smartsquad.io/studio/"><img src="https://img.shields.io/badge/Studio-iim.smartsquad.io-111827?style=flat-square" alt="Live studio" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="MIT License" /></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" /></a>
   <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue-3-42B883?style=flat-square&logo=vuedotjs&logoColor=white" alt="Vue 3" /></a>
@@ -42,7 +42,7 @@
 
 1. **Pattern.** Each inclined column scrolls continuously in the opposite direction to its neighbours. Speeds differ between columns but stay constant within a column. A deterministic phase offset avoids synchronized rows.
 2. **Component.** The renderer is plain DOM and CSS animations. React and Vue are thin bindings around that same mount. Expo and NativeScript host that same CSS renderer in a WebView. There is no React Native or NativeScript view port, and no per-frame React render.
-3. **Studio.** The [public configurator](https://smartsquad.github.io/images-in-motion/studio/) tunes canvas, speed, inclination, tiles and overlay, then copies settings to the clipboard. Images never leave the browser.
+3. **Studio.** The [public configurator](https://iim.smartsquad.io/studio/) tunes canvas, speed, inclination, tiles and overlay, then copies settings to the clipboard. Images never leave the browser.
 
 ## Install
 
@@ -56,7 +56,7 @@ React and Vue are optional peer dependencies. The JS renderer and `<images-in-mo
 
 ## Usage
 
-The parent must supply a measurable size: fixed dimensions, flex, or a width and aspect ratio. Full options: [API](https://smartsquad.github.io/images-in-motion/api.html).
+The parent must supply a measurable size: fixed dimensions, flex, or a width and aspect ratio. Full options: [API](https://iim.smartsquad.io/api.html).
 
 ### JavaScript
 
@@ -151,11 +151,11 @@ Host the custom element in a WebView. There is no NativeScript view port.
 <WebView src="~/assets/html/images-in-motion.html" />
 ```
 
-Guides: [React](https://smartsquad.github.io/images-in-motion/frameworks/react.html), [Vue](https://smartsquad.github.io/images-in-motion/frameworks/vue.html), [Expo](https://smartsquad.github.io/images-in-motion/frameworks/expo.html), [NativeScript](https://smartsquad.github.io/images-in-motion/frameworks/nativescript.html), [JavaScript](https://smartsquad.github.io/images-in-motion/frameworks/javascript.html), [custom element](https://smartsquad.github.io/images-in-motion/frameworks/element.html).
+Guides: [React](https://iim.smartsquad.io/frameworks/react.html), [Vue](https://iim.smartsquad.io/frameworks/vue.html), [Expo](https://iim.smartsquad.io/frameworks/expo.html), [NativeScript](https://iim.smartsquad.io/frameworks/nativescript.html), [JavaScript](https://iim.smartsquad.io/frameworks/javascript.html), [custom element](https://iim.smartsquad.io/frameworks/element.html).
 
 ## Studio
 
-Open the [live configurator](https://smartsquad.github.io/images-in-motion/studio/) or the standalone 01 / MOTION STUDY chrome:
+Open the [live configurator](https://iim.smartsquad.io/studio/) or the standalone 01 / MOTION STUDY chrome:
 
 ```bash
 bun install
@@ -173,13 +173,13 @@ bun run studio:dev
 
 ## Docs
 
-Site: [smartsquad.github.io/images-in-motion](https://smartsquad.github.io/images-in-motion/). Studio: [`/studio/`](https://smartsquad.github.io/images-in-motion/studio/). Local site:
+Site: [iim.smartsquad.io](https://iim.smartsquad.io/). Studio: [`/studio/`](https://iim.smartsquad.io/studio/). Local site:
 
 ```bash
 bun dev
 ```
 
-`http://127.0.0.1:5173/` is VitePress (home, guide, examples, embedded studio). `bun run docs:dev` is the same command. GitHub Pages uses `/images-in-motion/` because the repo is a project site.
+`http://127.0.0.1:5173/` is VitePress (home, guide, examples, embedded studio). `bun run docs:dev` is the same command. Production docs are `https://iim.smartsquad.io/` (`base: /`).
 
 ## Repository structure
 
