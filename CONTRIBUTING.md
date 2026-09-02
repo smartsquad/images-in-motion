@@ -64,7 +64,7 @@ Pushing the version tag is enough. `.github/workflows/release.yml` creates the G
 
 Preferred: [trusted publishing](https://docs.npmjs.com/trusted-publishers) (OIDC). No token in the repository. On npmjs.com, add a trusted publisher for package `images-in-motion`: GitHub organization `smartsquad`, repository `images-in-motion`, workflow filename `npm-publish.yml`.
 
-Alternative: set the repository secret `NPM_TOKEN` to an npm automation token. The publish job reads it when present. Prefer trusted publishing.
+Alternative: a [granular access token](https://docs.npmjs.com/creating-and-viewing-access-tokens) with **Bypass two-factor authentication** checked and **Packages and scopes → Read and write**. Put it in the repository secret `NPM_TOKEN`. Classic "Automation" tokens no longer exist. npm is dropping 2FA-bypass tokens for direct publish in January 2027; prefer trusted publishing.
 
 `prepublishOnly` already runs test, typecheck, build, and `test:dist`.
 
