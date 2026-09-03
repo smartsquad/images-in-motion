@@ -1,19 +1,9 @@
+/// <reference types="vite/client" />
 import type { Project } from '@stackblitz/sdk'
-import { EPlaygroundTitles, type TWebPlaygroundId } from '../playground'
+import type { TFrameworkExampleTab } from '../framework-example-source'
+import { EPlaygroundTitles, type TPlaygroundId } from '../playground'
 
 const ELibRaw = import.meta.glob('../../../src/{core,js,react,vue}/**/*.{ts,tsx}', {
-  query: '?raw',
-  import: 'default',
-  eager: true,
-}) as Record<string, string>
-
-const EPlaygroundRaw = import.meta.glob('../../playgrounds/{react,vue,javascript,element}/**/*', {
-  query: '?raw',
-  import: 'default',
-  eager: true,
-}) as Record<string, string>
-
-const ESharedImages = import.meta.glob('../../playgrounds/shared/images.ts', {
   query: '?raw',
   import: 'default',
   eager: true,
@@ -32,32 +22,30 @@ function vendorPath(globId: string): string | undefined {
   return `vendor/${rest}`
 }
 
-function includeVendor(path: string, id: TWebPlaygroundId): boolean {
+function includeVendor(path: string, id: TPlaygroundId): boolean {
   if (id === 'react') {
     return path.startsWith('vendor/core/') || path.startsWith('vendor/js/') || path.startsWith('vendor/react/')
   }
   if (id === 'vue') {
     return path.startsWith('vendor/core/') || path.startsWith('vendor/js/') || path.startsWith('vendor/vue/')
   }
-  return path.startsWith('vendor/core/') || path.startsWith('vendor/js/')
-}
-
-function playgroundRel(id: TWebPlaygroundId, globId: string): string | undefined {
-  const marker = `/playgrounds/${id}/`
-  const index = globId.lastIndexOf(marker)
-  if (index === -1) {
-    return undefined
+  if (id === 'javascript' || id === 'expo') {
+    return path.startsWith('vendor/core/') || path.startsWith('vendor/js/')
   }
-  return globId.slice(index + marker.length)
+  return false
 }
 
-function viteConfigFor(id: TWebPlaygroundId): string {
-  const pluginImport = id === 'react'
+function viteConfigFor(id: TPlaygroundId): string {
+  const pluginImport = id === 'react' || id === 'expo'
     ? "import react from '@vitejs/plugin-react'\n"
     : id === 'vue'
       ? "import vue from '@vitejs/plugin-vue'\n"
       : ''
-  const plugins = id === 'react' ? 'plugins: [react()],' : id === 'vue' ? 'plugins: [vue()],' : ''
+  const plugins = id === 'react' || id === 'expo'
+    ? 'plugins: [react()],'
+    : id === 'vue'
+      ? 'plugins: [vue()],'
+      : ''
   const extraAlias = id === 'react'
     ? "      'images-in-motion/react': resolve(__dirname, 'vendor/react/index.ts'),\n"
     : id === 'vue'
@@ -78,7 +66,7 @@ ${extraAlias}      'images-in-motion/core': resolve(__dirname, 'vendor/core/inde
 `
 }
 
-function packageJsonFor(id: TWebPlaygroundId): string {
+function packageJsonFor(id: TPlaygroundId): string {
   const base = {
     name: `images-in-motion-${id}`,
     private: true,
@@ -93,7 +81,7 @@ function packageJsonFor(id: TWebPlaygroundId): string {
     },
   }
 
-  if (id === 'react') {
+  if (id === 'react' || id === 'expo') {
     return JSON.stringify({
       ...base,
       dependencies: {
@@ -133,38 +121,93 @@ function packageJsonFor(id: TWebPlaygroundId): string {
   }, null, 2)
 }
 
-export function createStackBlitzProject(id: TWebPlaygroundId): Project {
-  const files: Record<string, string> = {}
+function htmlPage(title: string, body: string): string {
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>${title}</title>
+  </head>
+  <body>
+    ${body}
+  </body>
+</html>
+`
+}
 
+export function snippetOpenFile(id: TPlaygroundId, _tab: TFrameworkExampleTab): string {
+  if (id === 'vue') {
+    return 'src/App.vue'
+  }
+  if (id === 'javascript') {
+    return 'src/main.ts'
+  }
+  if (id === 'react' || id === 'expo') {
+    return 'src/App.tsx'
+  }
+  return 'index.html'
+}
+
+function copyVendorFiles(id: TPlaygroundId, files: Record<string, string>): void {
   for (const [globId, source] of Object.entries(ELibRaw)) {
     const path = vendorPath(globId)
     if (path && includeVendor(path, id)) {
       files[path] = source
     }
   }
+}
 
-  for (const [globId, source] of Object.entries(EPlaygroundRaw)) {
-    const rel = playgroundRel(id, globId)
-    if (!rel || rel === 'vite.config.ts' || rel === 'package.json') {
-      continue
-    }
-    files[rel] = source.includes('../../shared/images')
-      ? source.replaceAll('../../shared/images', './images')
-      : source
+/** StackBlitz project whose app file is the guide snippet, byte for byte. */
+export function createStackBlitzProject(id: TPlaygroundId, tab: TFrameworkExampleTab): Project {
+  const files: Record<string, string> = {}
+  const title = EPlaygroundTitles[id]
+
+  if (id === 'react' || id === 'expo') {
+    copyVendorFiles(id, files)
+    files['src/App.tsx'] = tab.code
+    files['src/main.tsx'] = `import { createRoot } from 'react-dom/client'
+import App from './App'
+
+createRoot(document.getElementById('root')!).render(<App />)
+`
+    files['index.html'] = htmlPage(title, `<div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>`)
+    files['vite.config.ts'] = viteConfigFor(id)
+    files['package.json'] = packageJsonFor(id)
+  } else if (id === 'vue') {
+    copyVendorFiles(id, files)
+    files['src/App.vue'] = tab.code
+    files['src/main.ts'] = `import { createApp } from 'vue'
+import App from './App.vue'
+
+createApp(App).mount('#app')
+`
+    files['index.html'] = htmlPage(title, `<div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>`)
+    files['vite.config.ts'] = viteConfigFor(id)
+    files['package.json'] = packageJsonFor(id)
+  } else if (id === 'javascript') {
+    copyVendorFiles(id, files)
+    files['src/main.ts'] = tab.code
+    files['index.html'] = htmlPage(title, `<div id="app"><div id="stage"></div></div>
+    <script type="module" src="/src/main.ts"></script>`)
+    files['vite.config.ts'] = viteConfigFor(id)
+    files['package.json'] = packageJsonFor(id)
+  } else {
+    files['index.html'] = /<!doctype html/i.test(tab.code) ? tab.code : htmlPage(title, tab.code)
+    files['package.json'] = packageJsonFor(id)
+    files['vite.config.ts'] = `import { defineConfig } from 'vite'\nexport default defineConfig({})\n`
   }
-
-  const shared = Object.values(ESharedImages)[0]
-  if (shared) {
-    files['src/images.ts'] = shared
-  }
-
-  files['vite.config.ts'] = viteConfigFor(id)
-  files['package.json'] = packageJsonFor(id)
 
   return {
-    title: EPlaygroundTitles[id],
+    title,
     description: 'No frames! Pure CSS. Geometry in src/core, animation in src/js.',
     template: 'node',
     files,
   }
+}
+
+export function snippetSourceInProject(project: Project, id: TPlaygroundId, tab: TFrameworkExampleTab): string {
+  return project.files[snippetOpenFile(id, tab)] ?? ''
 }

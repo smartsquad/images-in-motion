@@ -81,7 +81,7 @@ mountImagesInMotion(document.querySelector('#stage'), {
 })
 ```
 
-React and Vue: the same keys are props. Expo: pass them to `createImagesInMotionWebViewHtml`. NativeScript: the same keys as custom-element attributes or a module-script mount. Size the host yourself. Width and height from the studio preview are not in the payload. See [API](/api#size).
+React and Vue: the same keys are props. Expo: pass them to `createImagesInMotionWebViewHtml`. NativeScript: the same keys as custom-element attributes or a module-script mount. Examples fill the available box and size the mosaic to `20rem` by `20rem`. Width and height from the studio preview are not in the payload. See [API](/api#size).
 
 ```tsx
 import { ImagesInMotion, type IImagesInMotionMountOptions } from 'images-in-motion/react'
@@ -92,7 +92,9 @@ const iimOptions: IImagesInMotionMountOptions = {
   ...settings,
 }
 
-<ImagesInMotion {...iimOptions} />
+<div style={{ width: '100%', height: '100%', minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <ImagesInMotion width="20rem" height="20rem" {...iimOptions} />
+</div>
 ```
 
 ```vue
@@ -107,7 +109,9 @@ const iimOptions: TImagesInMotionProps = {
 </script>
 
 <template>
-  <ImagesInMotion v-bind="iimOptions" />
+  <div style="width:100%;height:100%;min-height:100dvh;display:flex;align-items:center;justify-content:center">
+    <ImagesInMotion v-bind="iimOptions" width="20rem" height="20rem" />
+  </div>
 </template>
 ```
 

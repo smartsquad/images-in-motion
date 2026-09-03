@@ -5,45 +5,13 @@ description: Mount ImagesInMotion from images-in-motion/react. The binding only 
 
 # React
 
-Import from `images-in-motion/react`. Size the parent. React is an optional peer (`>=18`).
+Import from `images-in-motion/react`. React is an optional peer (`>=18`).
 
 Props match `mountImagesInMotion`. Changing them calls `handle.update`. Unmount calls `destroy`.
 
 The component forwards host `className`, `style`, and other `div` attributes. Children render above the decorative sheet and stay interactive.
 
-::: code-group
-
-```tsx [Props]
-import { ImagesInMotion } from 'images-in-motion/react'
-
-<div style={{ width: 480, aspectRatio: '3 / 4' }}>
-  <ImagesInMotion
-    images={urls}
-    speedRange={[8, 18]}
-    angle={12}
-    overlayOpacity={0.35}
-  />
-</div>
-```
-
-```tsx [Options]
-import { ImagesInMotion, type IImagesInMotionMountOptions } from 'images-in-motion/react'
-
-const iimOptions: IImagesInMotionMountOptions = {
-  images: urls,
-  speedRange: [8, 18],
-  angle: 12,
-  overlayOpacity: 0.35,
-}
-
-<div style={{ width: 480, aspectRatio: '3 / 4' }}>
-  <ImagesInMotion {...iimOptions} />
-</div>
-```
-
-:::
-
-<FrameworkPlayground id="react" />
+<FrameworkExample id="react" />
 
 `{...iimOptions}` is JSX spread. It passes the same keys as individual props. There is no `iimOptions` prop.
 

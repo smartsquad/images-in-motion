@@ -23,7 +23,7 @@ features:
   - title: Image-free JSON
     details: Studio copies the props object. Image URLs never leave the browser.
     link: /export
-  - title: 5.97 KB gzip
+  - title: 6.48 KB gzip
     details: Minified IIFE, gzip -9. React and Vue are optional. Expo and NativeScript load this file in a WebView.
     link: /size
 ---
@@ -58,10 +58,17 @@ bun add images-in-motion
 
 React and Vue are optional peers. The JS renderer and `<images-in-motion>` have none. Expo and NativeScript host that same renderer in a WebView.
 
+Examples fill the available box and size the mosaic to `20rem` by `20rem`.
+
 ```js
 import { mountImagesInMotion } from 'images-in-motion'
 
-mountImagesInMotion(document.querySelector('#stage'), {
+document.body.style.cssText = 'margin:0;width:100%;height:100%;min-height:100dvh;display:flex;align-items:center;justify-content:center'
+const stage = document.querySelector('#stage')
+stage.style.width = '20rem'
+stage.style.height = '20rem'
+
+mountImagesInMotion(stage, {
   images: ['/a.jpg', '/b.jpg', '/c.jpg', '/d.jpg'],
   speedRange: [8, 18],
   angle: 12,

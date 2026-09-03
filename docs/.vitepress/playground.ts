@@ -1,6 +1,7 @@
 export const EGithubRepo = 'smartsquad/images-in-motion'
 
-export const EDocsHostedIife = 'https://iim.smartsquad.io/images-in-motion.global.js'
+/** Snack and NativeScript load this in the WebView. Same default as `createImagesInMotionWebViewHtml`. */
+export const EPlaygroundIifeSrc = 'https://unpkg.com/images-in-motion'
 
 export const EWebPlaygroundIds = ['react', 'vue', 'javascript', 'element'] as const
 
@@ -21,7 +22,7 @@ export const EStackBlitzOpenFiles: Record<TWebPlaygroundId, string> = {
   react: 'src/App.tsx',
   vue: 'src/App.vue',
   javascript: 'src/main.ts',
-  element: 'src/main.ts',
+  element: 'index.html',
 }
 
 export function playgroundFolder(id: TWebPlaygroundId): string {
@@ -52,6 +53,10 @@ export const ENativeScriptPreview = 'https://preview.nativescript.org/'
 export const ENativeScriptStackBlitz =
   'https://stackblitz.com/github/NativeScript/stackblitz-templates/tree/typescript?file=app%2Fmain-page.xml&title=NativeScript+Starter+TypeScript'
 
+export function isExpoNativeTab(id: TPlaygroundId, tab: { label: string }): boolean {
+  return id === 'expo' && tab.label === 'Native'
+}
+
 export function createSnackLaunchUrl(appTsx: string): string {
   const files = {
     'App.tsx': {
@@ -62,7 +67,7 @@ export function createSnackLaunchUrl(appTsx: string): string {
   const params = new URLSearchParams({
     name: EPlaygroundTitles.expo,
     description: 'CSS renderer in a WebView. No react-native-web mosaic.',
-    dependencies: 'react-native-webview',
+    dependencies: 'react-native-webview,images-in-motion',
     platform: 'mydevice',
     supportedPlatforms: 'mydevice,ios,android',
     preview: 'true',

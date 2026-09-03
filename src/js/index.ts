@@ -17,4 +17,8 @@ export {
   type TImagesInMotionObjectFit,
   type TImagesInMotionTileFit,
 } from './runtime'
-export { createImagesInMotionWebViewHtml, EImagesInMotionIifeSrc } from './webview-html'
+export {
+  createImagesInMotionWebViewHtml,
+  EImagesInMotionIifeSrc,
+  type TImagesInMotionWebViewHostSize,
+} from './webview-html'

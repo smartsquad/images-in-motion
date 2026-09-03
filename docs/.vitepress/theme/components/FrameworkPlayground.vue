@@ -1,21 +1,19 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useData } from 'vitepress'
-import expoApp from '../../../playgrounds/expo/App.tsx?raw'
 import {
-  ENativeScriptNew,
-  EStackBlitzOpenFiles,
   createSnackLaunchUrl,
-  isWebPlaygroundId,
-  stackBlitzGithubUrl,
+  isExpoNativeTab,
   type TPlaygroundId,
 } from '../../playground'
-import { createStackBlitzProject } from '../playground-projects'
+import { frameworkExampleTabs, type TFrameworkExampleTab } from '../../framework-example-source'
+import { createStackBlitzProject, snippetOpenFile } from '../playground-projects'
 
-/** Icons: nf-dev-stackblitz U+E942, nf-dev-expo U+E90C, nf-md-nativescript U+F0880, nf-md-open_in_new U+F03CC, nf-md-play_circle U+F040C. */
+/** Icons: nf-dev-stackblitz U+E942, nf-dev-expo U+E90C, nf-md-open_in_new U+F03CC, nf-md-play_circle U+F040C. */
 
 const props = defineProps<{
   id: TPlaygroundId
+  tab?: TFrameworkExampleTab
 }>()
 
 const { isDark } = useData()
@@ -24,37 +22,36 @@ const embedLoaded = ref(false)
 const embedStarting = ref(false)
 const opening = ref(false)
 const embedError = ref('')
+const isolated = ref(false)
 
-const web = computed(() => isWebPlaygroundId(props.id))
+onMounted(() => {
+  isolated.value = window.crossOriginIsolated
+})
+
+const tab = computed(() => props.tab ?? frameworkExampleTabs(props.id)[0]!)
+const snack = computed(() => isExpoNativeTab(props.id, tab.value))
+const stackblitz = computed(() => !snack.value)
 
 const href = computed(() => {
-  if (isWebPlaygroundId(props.id)) {
-    return stackBlitzGithubUrl(props.id)
+  if (snack.value) {
+    return createSnackLaunchUrl(tab.value.code)
   }
-  if (props.id === 'expo') {
-    return createSnackLaunchUrl(expoApp)
-  }
-  return ENativeScriptNew
+  return '#'
 })
 
-const label = computed(() => {
-  if (web.value) {
-    return 'Open in StackBlitz'
-  }
-  if (props.id === 'expo') {
-    return 'Open in Expo Snack'
-  }
-  return 'Open NativeScript Preview'
-})
+const label = computed(() => (snack.value ? 'Open in Expo Snack' : 'Open in StackBlitz'))
 
-const title = computed(() => {
-  if (web.value) {
-    return 'Open a live editor with the current library source'
-  }
-  if (props.id === 'expo') {
-    return 'Open this WebView host in Expo Snack'
-  }
-  return 'Open the official NativeScript TypeScript starter on StackBlitz'
+const title = computed(() => (
+  snack.value
+    ? 'Open the snippet above in Expo Snack'
+    : 'Open the snippet above in StackBlitz'
+))
+
+watch(() => tab.value.code, () => {
+  embedLoaded.value = false
+  embedStarting.value = false
+  embedError.value = ''
+  embedHost.value?.replaceChildren()
 })
 
 function editorTheme(): 'light' | 'dark' {
@@ -67,7 +64,7 @@ async function loadSdk() {
 }
 
 async function openEditor(event: MouseEvent): Promise<void> {
-  if (!isWebPlaygroundId(props.id)) {
+  if (snack.value) {
     return
   }
   event.preventDefault()
@@ -75,9 +72,9 @@ async function openEditor(event: MouseEvent): Promise<void> {
   embedError.value = ''
   try {
     const sdk = await loadSdk()
-    sdk.openProject(createStackBlitzProject(props.id), {
+    sdk.openProject(createStackBlitzProject(props.id, tab.value), {
       newWindow: true,
-      openFile: EStackBlitzOpenFiles[props.id],
+      openFile: snippetOpenFile(props.id, tab.value),
       theme: editorTheme(),
     })
   } catch (error) {
@@ -88,7 +85,7 @@ async function openEditor(event: MouseEvent): Promise<void> {
 }
 
 async function loadEmbed(): Promise<void> {
-  if (!isWebPlaygroundId(props.id) || embedLoaded.value || embedStarting.value) {
+  if (!stackblitz.value || embedLoaded.value || embedStarting.value) {
     return
   }
   embedStarting.value = true
@@ -103,15 +100,16 @@ async function loadEmbed(): Promise<void> {
   try {
     const sdk = await loadSdk()
     host.replaceChildren()
-    await sdk.embedProject(host, createStackBlitzProject(props.id), {
+    await sdk.embedProject(host, createStackBlitzProject(props.id, tab.value), {
       clickToLoad: false,
-      openFile: EStackBlitzOpenFiles[props.id],
+      openFile: snippetOpenFile(props.id, tab.value),
       view: 'preview',
       hideExplorer: true,
       hideNavigation: true,
       showSidebar: false,
       height: 520,
       theme: editorTheme(),
+      crossOriginIsolated: true,
     })
     embedLoaded.value = true
   } catch (error) {
@@ -135,28 +133,23 @@ async function loadEmbed(): Promise<void> {
         @click="openEditor"
       >
         <span
-          v-if="web"
-          class="nf fw-play__icon"
-          aria-hidden="true"
-        >{{ '\u{e942}' }}</span>
-        <span
-          v-else-if="id === 'expo'"
+          v-if="snack"
           class="nf fw-play__icon fw-icon--expo"
           aria-hidden="true"
         >{{ '\u{e90c}' }}</span>
         <span
           v-else
-          class="nf fw-play__icon fw-icon--nativescript"
+          class="nf fw-play__icon"
           aria-hidden="true"
-        >{{ '\u{f0880}' }}</span>
+        >{{ '\u{e942}' }}</span>
         {{ opening ? 'Opening...' : label }}
         <span class="nf fw-play__icon fw-play__icon--out" aria-hidden="true">{{ '\u{f03cc}' }}</span>
       </a>
       <button
-        v-if="web && !embedLoaded"
+        v-if="stackblitz && isolated && !embedLoaded"
         type="button"
         class="fw-play__btn fw-play__btn--ghost"
-        title="Load a live preview in this page"
+        title="Load the snippet above in this page"
         :disabled="embedStarting"
         @click="loadEmbed"
       >
@@ -166,7 +159,7 @@ async function loadEmbed(): Promise<void> {
     </div>
 
     <p v-if="embedError" class="fw-play__error">{{ embedError }}</p>
-    <div v-if="web" class="fw-play__embed" :hidden="!embedLoaded">
+    <div v-if="stackblitz" class="fw-play__embed" :hidden="!embedLoaded">
       <div ref="embedHost" />
     </div>
   </div>

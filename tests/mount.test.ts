@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { createImagesInMotionLayout } from '../src/core'
 import { mountImagesInMotion } from '../src/js/mount'
 
 function sizedHost(width = 480, height = 640): HTMLDivElement {
@@ -285,6 +286,59 @@ describe('mountImagesInMotion', () => {
       expect(animation.playState).toBe('paused')
     })
     handle.destroy()
+  })
+
+  it('uses the parent 480 by 3/4 box when the host is 100% CSS', () => {
+    const parent = document.createElement('div')
+    parent.style.width = '480px'
+    parent.style.aspectRatio = '3 / 4'
+    Object.defineProperty(parent, 'getBoundingClientRect', {
+      value: () => ({
+        width: 480,
+        height: 640,
+        top: 0,
+        left: 0,
+        bottom: 640,
+        right: 480,
+        x: 0,
+        y: 0,
+        toJSON() {
+          return {}
+        },
+      }),
+    })
+    const host = document.createElement('div')
+    host.style.display = 'block'
+    host.style.width = '100%'
+    host.style.height = '100%'
+    Object.defineProperty(host, 'getBoundingClientRect', {
+      value: () => parent.getBoundingClientRect(),
+    })
+    parent.append(host)
+    document.body.append(parent)
+
+    const handle = mountImagesInMotion(host, { images: EImages, tileWidth: 168 })
+    const expected = createImagesInMotionLayout(480, 640, EImages.length, { tileWidth: 168 })
+    expect(host.style.minHeight).toBe('')
+    expect(handle.getLayout().height).toBe(expected.height)
+    expect(handle.getLayout().lanes.length).toBeGreaterThan(0)
+    expect(host.querySelectorAll('.iim-track').length).toBeGreaterThan(0)
+    handle.destroy()
+  })
+
+  it('stays empty and warns once when the host is 0x0', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const host = document.createElement('div')
+    document.body.append(host)
+    const handle = mountImagesInMotion(host, { images: EImages, tileWidth: 168 })
+    expect(host.style.minHeight).toBe('')
+    expect(handle.getLayout().lanes).toHaveLength(0)
+    expect(host.querySelectorAll('.iim-track')).toHaveLength(0)
+    expect(warn).toHaveBeenCalledTimes(1)
+    expect(warn.mock.calls[0]![0]).toMatch(/0x0/)
+    expect(warn.mock.calls[0]![0]).toMatch(/20rem/)
+    handle.destroy()
+    warn.mockRestore()
   })
 
   it('accepts a named iimOptions constant', () => {

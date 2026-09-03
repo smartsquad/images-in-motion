@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<{
   gapColor?: string
   gapOpacity?: number
   ratio?: string
+  size?: string
   stage?: string
   caption?: string
   fill?: boolean
@@ -52,7 +53,9 @@ onMounted(() => {
       :class="{ 'motion-demo__stage--fill': fill }"
       :style="fill
         ? { width: '100%', height: '100%', background: stage }
-        : { aspectRatio: ratio, background: stage }"
+        : size
+          ? { width: size, height: size, background: stage }
+          : { aspectRatio: ratio, background: stage }"
     >
       <ImagesInMotion
         v-if="ready"

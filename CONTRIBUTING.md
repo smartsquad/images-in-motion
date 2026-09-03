@@ -70,26 +70,20 @@ Alternative: a [granular access token](https://docs.npmjs.com/creating-and-viewi
 
 ## Docs playgrounds
 
-Framework guides launch live editors from `docs/playgrounds/`. Update the matching folder when the mount example on that guide changes.
+Snack, StackBlitz, and Load live preview open the snippet tab visible above the buttons (`frameworkExampleTabs` in `docs/.vitepress/framework-example-source.ts`). Do not ship a second app source. The local library is vendored into the StackBlitz project only so `import 'images-in-motion'` resolves.
 
-| Guide | Host | Folder |
-|-------|------|--------|
-| React | StackBlitz | `docs/playgrounds/react` |
-| Vue | StackBlitz | `docs/playgrounds/vue` |
-| JavaScript | StackBlitz | `docs/playgrounds/javascript` |
-| Custom element | StackBlitz | `docs/playgrounds/element` |
-| Expo | Snack | `docs/playgrounds/expo/App.tsx` |
-| NativeScript | NativeScript Preview | `docs/playgrounds/nativescript/images-in-motion.html` |
+| Guide tab | Host |
+|-----------|------|
+| Expo Native | Expo Snack (`createSnackLaunchUrl` with that tab's code) |
+| Every other tab | StackBlitz SDK (`createStackBlitzProject` with that tab's code) |
 
-Web playgrounds alias `images-in-motion` to `src/` (`vite.config.ts`).
+`docs/playgrounds/` is the GitHub-import fallback for the first tab of each web guide. Keep those app files equal to that first snippet. The on-page mosaic uses the verified Unsplash pool in `docs/playgrounds/shared/images.ts`. Snippets use Picsum.
 
-Shared demo images live in `docs/playgrounds/shared/images.ts` (verified Unsplash IDs only).
+Do not put `rem` on the native WebView `style`. Size `#stage` in CSS and pass the native `onLayout` box as `viewportWidth` / `viewportHeight`. After `bun run build`, `docs:dev` and `docs:build` copy `dist/iife/images-in-motion.global.js` to `docs/public/` for the docs site. That file is gitignored. Do not point Snack at Snack web preview as the mosaic runtime.
 
-Expo Snack does not import `images-in-motion`. It inlines WebView HTML and loads the docs-hosted IIFE (`https://iim.smartsquad.io/images-in-motion.global.js`). After `bun run build`, `docs:dev` and `docs:build` copy `dist/iife/images-in-motion.global.js` to `docs/public/`. That file is gitignored. Do not point Snack at Snack web preview as the mosaic runtime. Snack web uses react-native-web for the app shell.
+`docs/.vitepress/playground.ts` holds the host URLs. Tests require each Snack/StackBlitz app file to equal the snippet tab.
 
-NativeScript has no in-browser mosaic. Keep the CTA on `https://nativescript.new/typescript` and `https://preview.nativescript.org/`. Do not invent a Playground URL. The classic Playground is retired.
-
-`docs/.vitepress/playground.ts` holds the host URLs. Tests cover those links and the Expo/NativeScript file constraints.
+In-page StackBlitz embeds need a cross-origin isolated parent. VitePress `dev` and `preview` send `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: credentialless`. The embed sets `crossOriginIsolated: true`. GitHub Pages cannot send those headers, so production shows only Open in StackBlitz.
 
 ## License
 

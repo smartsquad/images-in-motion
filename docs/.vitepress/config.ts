@@ -15,6 +15,29 @@ const EBase = '/'
 const EPublicAsset = (file: string) => `${EBase}${file}`
 const ESrc = (relative: string) => fileURLToPath(new URL(relative, import.meta.url))
 
+/** StackBlitz WebContainers need a cross-origin isolated parent. `credentialless` keeps Unsplash and other no-cors assets loadable. */
+const ECrossOriginIsolationHeaders = {
+  'Cross-Origin-Embedder-Policy': 'credentialless',
+  'Cross-Origin-Opener-Policy': 'same-origin',
+}
+
+function crossOriginIsolation(): Plugin {
+  const apply = (_req: unknown, res: { setHeader: (name: string, value: string) => void }, next: () => void) => {
+    res.setHeader('Cross-Origin-Embedder-Policy', ECrossOriginIsolationHeaders['Cross-Origin-Embedder-Policy'])
+    res.setHeader('Cross-Origin-Opener-Policy', ECrossOriginIsolationHeaders['Cross-Origin-Opener-Policy'])
+    next()
+  }
+  return {
+    name: 'images-in-motion-coop-coep',
+    configureServer(server) {
+      server.middlewares.use(apply)
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(apply)
+    },
+  }
+}
+
 function copyIifeToDocsPublic(): Plugin {
   return {
     name: 'images-in-motion-copy-iife',
@@ -121,6 +144,7 @@ export default defineConfig({
   },
   vite: {
     plugins: [
+      crossOriginIsolation(),
       copyIifeToDocsPublic(),
       react({ include: /\/studio\/.*\.[tj]sx?$/ }),
       groupIconVitePlugin({
@@ -152,9 +176,13 @@ export default defineConfig({
       include: ['react', 'react-dom', 'react-dom/client', 'gsap', 'gsap/ScrollTrigger', '@stackblitz/sdk'],
     },
     server: {
+      headers: ECrossOriginIsolationHeaders,
       fs: {
         allow: [ESrc('../..'), tmpdir(), '/private/var/folders'],
       },
+    },
+    preview: {
+      headers: ECrossOriginIsolationHeaders,
     },
   },
 })

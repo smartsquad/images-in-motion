@@ -4,11 +4,12 @@ Options are defined in `src/core/layout.ts` and exported through every mount. JS
 
 ## Size
 
-Not a prop. Size the host.
+Give the host a size. Examples fill the available box and size the mosaic to `20rem` by `20rem`. A number is pixels.
 
 | Surface | How |
 | --- | --- |
-| Parent element | Width and height, flex, or width plus `aspect-ratio`. |
+| Host | Size the element or its parent. |
+| React / Vue `width`, `height` | CSS `width` / `height` on the host. |
 | Studio canvas preview | Width, height, browser fullscreen, corner radius, and background of the studio host (1-10000, radius 0-100%). Full screen fills the preview panel. Values clamp on blur. Preview CSS only. Not written to JSON. |
 | `imageCount` | Studio preview field. Not a renderer prop. |
 
@@ -55,7 +56,7 @@ interface IImagesInMotionHandle {
 
 Import `mountImagesInMotion` from `images-in-motion`. React and Vue call it for you. Expo and NativeScript host that same mount in a WebView.
 
-React: `<ImagesInMotion {...iimOptions} />`. Vue: `<ImagesInMotion v-bind="iimOptions" />`. JavaScript: `mountImagesInMotion(host, iimOptions)`. Expo: `createImagesInMotionWebViewHtml(iimOptions)` in a WebView. NativeScript: the custom element (or a module script) in a WebView. The custom element reads attributes only.
+React: `<ImagesInMotion width="20rem" height="20rem" {...iimOptions} />`. Vue: `<ImagesInMotion v-bind="iimOptions" width="20rem" height="20rem" />`. JavaScript: size the host, then `mountImagesInMotion(host, iimOptions)`. Expo: `createImagesInMotionWebViewHtml(iimOptions, undefined, { width: '20rem', height: '20rem', viewportWidth, viewportHeight })` in a WebView. Pass the native `onLayout` size as `viewportWidth` / `viewportHeight` on iOS. NativeScript: the custom element (or a module script) in a WebView, with rem on the element. The custom element reads attributes only.
 
 ## Custom element attributes
 

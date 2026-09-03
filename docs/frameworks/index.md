@@ -9,9 +9,9 @@ The animation is one CSS `@keyframes` translate per lane. Geometry lives in `src
 
 Use a binding when the app is React or Vue 3. Use Expo with a WebView. Use NativeScript with a WebView. Use the JS entry when you already have a host element. Use the custom element when you want markup.
 
-Each guide shows per-prop mounts and the same fields on an `iimOptions` constant. React spreads the object. Vue uses `v-bind`. JavaScript already takes that object. The custom element stays on attributes.
+Each guide shows per-prop mounts and the same fields on an `iimOptions` constant. React spreads the object. Vue uses `v-bind`. JavaScript already takes that object. The custom element stays on attributes. Snippets define a `const images` of random Picsum URLs.
 
-Give the parent a measurable size before mount. See [Install and usage](/guide).
+Examples fill the available box. The mosaic is `20rem` by `20rem`. See [Install and usage](/guide).
 
 ## Frameworks
 

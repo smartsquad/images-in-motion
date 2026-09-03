@@ -15,6 +15,7 @@ import {
   playbackRampRate,
   playbackRampT,
 } from './playback-ramp'
+import { readHostBox } from './host-box'
 import { ensureImagesInMotionStyle } from './style'
 import { measureImageAspects } from './measure'
 import { prepareImageSource, shouldPrepareImageSource } from './svg'
@@ -216,7 +217,9 @@ function readPlaybackRate(animation: Animation): number {
   return animation.playbackRate
 }
 
-/** Mounts the decorative pattern into `host`. The host must have a measurable size. */
+const EEmptyHostWarning = 'images-in-motion: host is 0x0. Set an explicit CSS size (for example 20rem by 20rem).'
+
+/** Mounts the decorative pattern into `host`. A 0x0 host stays invisible. */
 export function mountImagesInMotion(
   host: HTMLElement,
   options: IImagesInMotionMountOptions,
@@ -262,6 +265,15 @@ export function mountImagesInMotion(
   }
   let layout = createImagesInMotionLayout(0, 0, 0)
   let size = { width: 0, height: 0 }
+  let warnedEmptyHost = false
+
+  function warnEmptyHost(): void {
+    if (warnedEmptyHost) {
+      return
+    }
+    warnedEmptyHost = true
+    console.warn(EEmptyHostWarning)
+  }
   const prepared = new Map<string, string>()
   const created = new Set<string>()
   const inflight = new Map<string, Promise<string>>()
@@ -429,15 +441,19 @@ export function mountImagesInMotion(
     }
     const width = entry.contentRect.width
     const height = entry.contentRect.height
-    if ((!width || !height) && (size.width || size.height)) {
+    if (!width || !height) {
       return
     }
     measureAndRender(width, height)
   })
   resizeObserver.observe(host)
 
-  const rect = host.getBoundingClientRect()
-  measureAndRender(rect.width, rect.height)
+  const box = readHostBox(host)
+  if (!box.width || !box.height) {
+    warnEmptyHost()
+  } else {
+    measureAndRender(box.width, box.height)
+  }
 
   async function refreshAspects(): Promise<void> {
     if (!needsImageAspects(current.tileFit) || current.images.length === 0) {

@@ -1,25 +1,27 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <style>
-      html,
-      body,
-      images-in-motion {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        background: transparent;
-      }
-    </style>
-  </head>
-  <body>
+  <body style="margin:0;width:100%;height:100%;min-height:100dvh;display:flex;align-items:center;justify-content:center">
     <images-in-motion
-      images='["https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fm=jpg&fit=crop&w=800&h=1200&q=80","https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fm=jpg&fit=crop&w=1200&h=800&q=80","https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fm=jpg&fit=crop&w=800&h=800&q=80","https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fm=jpg&fit=crop&w=1000&h=700&q=80","https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fm=jpg&fit=crop&w=800&h=1000&q=80","https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fm=jpg&fit=crop&w=700&h=1100&q=80","https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fm=jpg&fit=crop&w=800&h=1200&q=80","https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fm=jpg&fit=crop&w=1200&h=800&q=80"]'
+      id="mosaic"
+      style="width:20rem;height:20rem"
       angle="12"
       speed-range="[8,18]"
     ></images-in-motion>
-    <script src="https://iim.smartsquad.io/images-in-motion.global.js"></script>
+    <script type="module">
+      import 'https://unpkg.com/images-in-motion'
+
+      const images = [
+        'https://picsum.photos/800/1200?random=1',
+        'https://picsum.photos/1200/800?random=2',
+        'https://picsum.photos/800/800?random=3',
+        'https://picsum.photos/1000/700?random=4',
+        'https://picsum.photos/800/1000?random=5',
+        'https://picsum.photos/700/1100?random=6',
+        'https://picsum.photos/800/1200?random=7',
+        'https://picsum.photos/1200/800?random=8',
+      ]
+
+      document.querySelector('#mosaic').setAttribute('images', JSON.stringify(images))
+    </script>
   </body>
 </html>

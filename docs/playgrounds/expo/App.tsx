@@ -1,54 +1,52 @@
+import { useState } from 'react'
 import { View } from 'react-native'
 import { WebView } from 'react-native-webview'
+import { createImagesInMotionWebViewHtml } from 'images-in-motion'
 
-const iimOptions = {
-  images: [
-    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fm=jpg&fit=crop&w=800&h=1200&q=80',
-    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fm=jpg&fit=crop&w=1200&h=800&q=80',
-    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fm=jpg&fit=crop&w=800&h=800&q=80',
-    'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fm=jpg&fit=crop&w=1000&h=700&q=80',
-    'https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fm=jpg&fit=crop&w=800&h=1000&q=80',
-    'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fm=jpg&fit=crop&w=700&h=1100&q=80',
-    'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fm=jpg&fit=crop&w=800&h=1200&q=80',
-    'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fm=jpg&fit=crop&w=1200&h=800&q=80',
-  ],
-  speedRange: [8, 18],
-  angle: 12,
-}
+const images = [
+  'https://picsum.photos/800/1200?random=1',
+  'https://picsum.photos/1200/800?random=2',
+  'https://picsum.photos/800/800?random=3',
+  'https://picsum.photos/1000/700?random=4',
+  'https://picsum.photos/800/1000?random=5',
+  'https://picsum.photos/700/1100?random=6',
+  'https://picsum.photos/800/1200?random=7',
+  'https://picsum.photos/1200/800?random=8',
+]
 
-const scriptSrc = 'https://iim.smartsquad.io/images-in-motion.global.js'
-
-function escapeScriptSrc(src: string): string {
-  return src.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
-}
-
-function embedJson(value: unknown): string {
-  return JSON.stringify(value).replace(/</g, '\\u003c')
-}
-
-const html = `<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<style>html,body,#stage{margin:0;width:100%;height:100%;background:transparent;overflow:hidden}</style>
-</head>
-<body>
-<div id="stage"></div>
-<script src="${escapeScriptSrc(scriptSrc)}"></script>
-<script>ImagesInMotion.mountImagesInMotion(document.getElementById("stage"),${embedJson(iimOptions)})</script>
-</body>
-</html>`
+const iimOptions = { images, speedRange: [8, 18], angle: 12 }
 
 export default function App() {
+  const [viewport, setViewport] = useState({ width: 0, height: 0 })
+  const html = viewport.width > 0 && viewport.height > 0
+    ? createImagesInMotionWebViewHtml(iimOptions, undefined, {
+        width: '20rem',
+        height: '20rem',
+        viewportWidth: viewport.width,
+        viewportHeight: viewport.height,
+      })
+    : ''
+
   return (
-    <View style={{ flex: 1 }}>
-      <WebView
-        originWhitelist={['*']}
-        source={{ html }}
-        style={{ flex: 1, backgroundColor: 'transparent' }}
-        scrollEnabled={false}
-      />
+    <View
+      style={{ flex: 1 }}
+      onLayout={(event) => {
+        const { width, height } = event.nativeEvent.layout
+        setViewport((current) => (
+          current.width === width && current.height === height ? current : { width, height }
+        ))
+      }}
+    >
+      {html ? (
+        <WebView
+          originWhitelist={['*']}
+          source={{ html }}
+          style={{ flex: 1, backgroundColor: 'transparent' }}
+          scrollEnabled={false}
+          automaticallyAdjustContentInsets={false}
+          contentInsetAdjustmentBehavior="never"
+        />
+      ) : null}
     </View>
   )
 }

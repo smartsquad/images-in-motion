@@ -4,6 +4,7 @@ export default defineConfig([
   {
     entry: {
       'core/index': 'src/core/index.ts',
+      'examples/index': 'src/example-images.ts',
       'js/index': 'src/js/index.ts',
       'react/index': 'src/react/index.ts',
       'vue/index': 'src/vue/index.ts',

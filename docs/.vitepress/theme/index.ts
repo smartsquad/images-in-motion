@@ -4,6 +4,7 @@ import DefaultTheme from 'vitepress/theme-without-fonts'
 import CopyOrDownloadAsMarkdownButtons from './components/CopyPageButtons.vue'
 import 'virtual:group-icons.css'
 import './style.css'
+import FrameworkExample from './components/FrameworkExample.vue'
 import FrameworkPlayground from './components/FrameworkPlayground.vue'
 import FrameworksCards from './components/FrameworksCards.vue'
 import HeroMotion from './components/HeroMotion.vue'
@@ -19,6 +20,7 @@ export default {
   }),
   enhanceApp({ app }) {
     app.component('CopyOrDownloadAsMarkdownButtons', CopyOrDownloadAsMarkdownButtons)
+    app.component('FrameworkExample', FrameworkExample)
     app.component('FrameworkPlayground', FrameworkPlayground)
     app.component('FrameworksCards', FrameworksCards)
     app.component('HomeLive', HomeLive)

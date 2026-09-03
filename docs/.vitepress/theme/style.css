@@ -512,6 +512,32 @@ html:has(.VPHome) {
   line-height: 1.5;
 }
 
+.fw-example {
+  margin: 16px 0 8px;
+}
+
+.fw-example__demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 20px;
+}
+
+.fw-example__demo .motion-demo__stage {
+  max-width: 100%;
+}
+
+.fw-example__note {
+  margin: 8px 0 24px;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.fw-example__shiki > pre {
+  margin: 0;
+}
+
 .fw-play {
   margin: 20px 0 32px;
 }

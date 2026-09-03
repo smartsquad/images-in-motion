@@ -9,13 +9,17 @@ import {
   type PropType,
   type SetupContext,
 } from 'vue'
+import { cssBoxSize } from '../js/host-box'
 import { mountImagesInMotion, type IImagesInMotionHandle, type IImagesInMotionMountOptions } from '../js/mount'
 import type { TImagesInMotionImageOrder, TImagesInMotionMotionAxis, TImagesInMotionTileFit } from '../core'
 
 const EHostStyle: CSSProperties = {
+  display: 'block',
   position: 'relative',
   overflow: 'hidden',
   backgroundColor: 'transparent',
+  width: '100%',
+  height: '100%',
 }
 
 const EStageStyle: CSSProperties = {
@@ -72,17 +76,28 @@ export const ImagesInMotion = defineComponent(
       handle = undefined
     })
 
-    return () => h('div', {
-      class: attrs.class,
-      style: [EHostStyle, attrs.style as CSSProperties | undefined],
-    }, [
-      h('div', {
-        ref: stage,
-        'aria-hidden': 'true',
-        style: EStageStyle,
-      }),
-      slots.default?.(),
-    ])
+    return () => {
+      const { class: className, style, width, height, ...rest } = attrs
+      return h('div', {
+        ...rest,
+        class: className,
+        style: [
+          EHostStyle,
+          {
+            width: cssBoxSize(width) ?? EHostStyle.width,
+            height: cssBoxSize(height) ?? EHostStyle.height,
+          },
+          style as CSSProperties | undefined,
+        ],
+      }, [
+        h('div', {
+          ref: stage,
+          'aria-hidden': 'true',
+          style: EStageStyle,
+        }),
+        slots.default?.(),
+      ])
+    }
   },
   {
     name: 'ImagesInMotion',

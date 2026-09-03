@@ -56,7 +56,7 @@ React and Vue are optional peer dependencies. The JS renderer and `<images-in-mo
 
 ## Usage
 
-The parent must supply a measurable size: fixed dimensions, flex, or a width and aspect ratio. Full options: [API](https://iim.smartsquad.io/api.html).
+Give the host a size. Snippets fill the available box and size the mosaic to `20rem` by `20rem`. Full options: [API](https://iim.smartsquad.io/api.html).
 
 ### JavaScript
 
@@ -71,7 +71,11 @@ const iimOptions = {
   gap: 4,
 }
 
-const handle = mountImagesInMotion(document.querySelector('#stage'), iimOptions)
+document.body.style.cssText = 'margin:0;width:100%;height:100%;min-height:100dvh;display:flex;align-items:center;justify-content:center'
+const stage = document.querySelector('#stage')
+stage.style.width = '20rem'
+stage.style.height = '20rem'
+const handle = mountImagesInMotion(stage, iimOptions)
 handle.update({ paused: true })
 handle.destroy()
 ```
@@ -81,7 +85,7 @@ Custom element (also via unpkg / jsDelivr):
 ```html
 <script type="module" src="https://unpkg.com/images-in-motion"></script>
 <images-in-motion
-  style="width:480px;height:640px"
+  style="width:20rem;height:20rem"
   images='["/a.jpg","/b.jpg","/c.jpg","/d.jpg"]'
   angle="12"
   speed-range="[8,18]"
@@ -100,8 +104,8 @@ const iimOptions = {
   overlayOpacity: 0.35,
 }
 
-<div style={{ width: 480, aspectRatio: '3 / 4' }}>
-  <ImagesInMotion {...iimOptions} />
+<div style={{ width: '100%', height: '100%', minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <ImagesInMotion width="20rem" height="20rem" {...iimOptions} />
 </div>
 ```
 
@@ -119,7 +123,9 @@ const iimOptions = {
 </script>
 
 <template>
-  <ImagesInMotion v-bind="iimOptions" />
+  <div style="width:100%;height:100%;min-height:100dvh;display:flex;align-items:center;justify-content:center">
+    <ImagesInMotion v-bind="iimOptions" width="20rem" height="20rem" />
+  </div>
 </template>
 ```
 
@@ -128,6 +134,8 @@ const iimOptions = {
 Host the CSS renderer in a `react-native-webview`. There is no React Native port.
 
 ```tsx
+import { useState } from 'react'
+import { View } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { createImagesInMotionWebViewHtml } from 'images-in-motion'
 
@@ -137,10 +145,40 @@ const iimOptions = {
   angle: 12,
 }
 
-<WebView
-  originWhitelist={['*']}
-  source={{ html: createImagesInMotionWebViewHtml(iimOptions) }}
-/>
+export default function App() {
+  const [viewport, setViewport] = useState({ width: 0, height: 0 })
+  const html = viewport.width > 0 && viewport.height > 0
+    ? createImagesInMotionWebViewHtml(iimOptions, undefined, {
+        width: '20rem',
+        height: '20rem',
+        viewportWidth: viewport.width,
+        viewportHeight: viewport.height,
+      })
+    : ''
+
+  return (
+    <View
+      style={{ flex: 1 }}
+      onLayout={(event) => {
+        const { width, height } = event.nativeEvent.layout
+        setViewport((current) => (
+          current.width === width && current.height === height ? current : { width, height }
+        ))
+      }}
+    >
+      {html ? (
+        <WebView
+          originWhitelist={['*']}
+          source={{ html }}
+          style={{ flex: 1, backgroundColor: 'transparent' }}
+          scrollEnabled={false}
+          automaticallyAdjustContentInsets={false}
+          contentInsetAdjustmentBehavior="never"
+        />
+      ) : null}
+    </View>
+  )
+}
 ```
 
 ### NativeScript

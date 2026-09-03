@@ -1,22 +1,29 @@
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { frameworkExampleTabs } from '../docs/.vitepress/framework-example-source'
 import {
-  EDocsHostedIife,
-  ENativeScriptNew,
-  ENativeScriptPreview,
-  ENativeScriptStackBlitz,
   createSnackLaunchUrl,
+  isExpoNativeTab,
   playgroundFolder,
   stackBlitzGithubUrl,
+  type TPlaygroundId,
 } from '../docs/.vitepress/playground'
+import {
+  createStackBlitzProject,
+  snippetOpenFile,
+} from '../docs/.vitepress/theme/playground-projects'
 import { EBannedExamplePhotoIds } from '../src/example-images'
 
-const expoApp = readFileSync(path.join(process.cwd(), 'docs/playgrounds/expo/App.tsx'), 'utf8')
-const nativeHtml = readFileSync(
-  path.join(process.cwd(), 'docs/playgrounds/nativescript/images-in-motion.html'),
-  'utf8',
-)
+const EFrameworkIds: readonly TPlaygroundId[] = [
+  'react',
+  'vue',
+  'expo',
+  'nativescript',
+  'javascript',
+  'element',
+]
+
 const sharedImages = readFileSync(path.join(process.cwd(), 'docs/playgrounds/shared/images.ts'), 'utf8')
 
 describe('docs playground hosts', () => {
@@ -27,45 +34,76 @@ describe('docs playground hosts', () => {
     expect(url).toContain('file=docs%2Fplaygrounds%2Freact%2Fsrc%2FApp.tsx')
     expect(playgroundFolder('vue')).toBe('docs/playgrounds/vue')
   })
+})
 
-  it('builds an Expo Snack URL that stays on device platforms', () => {
-    const url = createSnackLaunchUrl(expoApp)
-    expect(url.startsWith('https://snack.expo.dev?')).toBe(true)
-    expect(url).toContain('dependencies=react-native-webview')
-    expect(url).toContain('platform=mydevice')
-    expect(url).toContain('supportedPlatforms=mydevice%2Cios%2Candroid')
-    expect(url).not.toContain('platform=web')
+describe('docs StackBlitz embed isolation', () => {
+  it('serves COOP/COEP and embeds with crossOriginIsolated', () => {
+    const config = readFileSync(path.join(process.cwd(), 'docs/.vitepress/config.ts'), 'utf8')
+    const playground = readFileSync(
+      path.join(process.cwd(), 'docs/.vitepress/theme/components/FrameworkPlayground.vue'),
+      'utf8',
+    )
+    expect(config).toContain('images-in-motion-coop-coep')
+    expect(config).toContain('Cross-Origin-Embedder-Policy')
+    expect(config).toContain('credentialless')
+    expect(config).toContain('Cross-Origin-Opener-Policy')
+    expect(playground).toContain('crossOriginIsolated: true')
+    expect(playground).toContain('window.crossOriginIsolated')
+  })
+})
+
+describe('snippet-backed live editors', () => {
+  it('puts the visible snippet into Snack or StackBlitz without rewriting it', () => {
+    for (const id of EFrameworkIds) {
+      for (const tab of frameworkExampleTabs(id)) {
+        if (isExpoNativeTab(id, tab)) {
+          const url = createSnackLaunchUrl(tab.code)
+          const files = JSON.parse(new URL(url).searchParams.get('files') ?? '') as {
+            'App.tsx'?: { contents?: string }
+          }
+          expect(url).toContain('dependencies=react-native-webview')
+          expect(url).toContain('images-in-motion')
+          expect(url).toContain('platform=mydevice')
+          expect(url).not.toContain('platform=web')
+          expect(files['App.tsx']?.contents).toBe(tab.code)
+          continue
+        }
+        const project = createStackBlitzProject(id, tab)
+        const openFile = snippetOpenFile(id, tab)
+        const source = project.files[openFile]
+        expect(source).toBeDefined()
+        if (openFile === 'index.html' && !/<!doctype html/i.test(tab.code)) {
+          expect(source).toContain(tab.code)
+        } else {
+          expect(source).toBe(tab.code)
+        }
+      }
+    }
   })
 
-  it('keeps official NativeScript Preview URLs', () => {
-    expect(ENativeScriptNew).toBe('https://nativescript.new/typescript')
-    expect(ENativeScriptPreview).toBe('https://preview.nativescript.org/')
-    expect(ENativeScriptStackBlitz.startsWith('https://stackblitz.com/github/NativeScript/stackblitz-templates/tree/typescript')).toBe(true)
+  it('opens the snippet file in the StackBlitz editor', () => {
+    const [tab] = frameworkExampleTabs('react')
+    expect(tab).toBeDefined()
+    expect(snippetOpenFile('react', tab!)).toBe('src/App.tsx')
+    expect(snippetOpenFile('vue', frameworkExampleTabs('vue')[0]!)).toBe('src/App.vue')
+    expect(snippetOpenFile('javascript', frameworkExampleTabs('javascript')[0]!)).toBe('src/main.ts')
+  })
+
+  it('keeps GitHub fallback app files equal to the first snippet tab', () => {
+    const firstTab = (id: TPlaygroundId) => frameworkExampleTabs(id)[0]!.code
+    expect(readFileSync(path.join(process.cwd(), 'docs/playgrounds/react/src/App.tsx'), 'utf8')).toBe(firstTab('react'))
+    expect(readFileSync(path.join(process.cwd(), 'docs/playgrounds/vue/src/App.vue'), 'utf8')).toBe(firstTab('vue'))
+    expect(readFileSync(path.join(process.cwd(), 'docs/playgrounds/javascript/src/main.ts'), 'utf8')).toBe(firstTab('javascript'))
+    expect(readFileSync(path.join(process.cwd(), 'docs/playgrounds/expo/App.tsx'), 'utf8')).toBe(firstTab('expo'))
+    expect(readFileSync(path.join(process.cwd(), 'docs/playgrounds/nativescript/images-in-motion.html'), 'utf8')).toBe(firstTab('nativescript'))
+    expect(readFileSync(path.join(process.cwd(), 'docs/playgrounds/element/index.html'), 'utf8')).toContain(firstTab('element'))
   })
 })
 
 describe('docs playground sources', () => {
-  it('does not import images-in-motion in Expo Snack', () => {
-    expect(expoApp).toContain('react-native-webview')
-    expect(expoApp).toContain('ImagesInMotion.mountImagesInMotion')
-    expect(expoApp).toContain(EDocsHostedIife)
-    expect(expoApp).not.toContain("from 'images-in-motion'")
-    expect(expoApp).not.toContain("from 'react-native-web'")
-    expect(expoApp).not.toContain('use dom')
-    expect(expoApp).not.toContain('Reanimated')
-  })
-
-  it('hosts the NativeScript sample as a custom element document', () => {
-    expect(nativeHtml).toContain('<images-in-motion')
-    expect(nativeHtml).toContain(EDocsHostedIife)
-    expect(nativeHtml).not.toContain('play.nativescript.org')
-  })
-
-  it('uses verified Unsplash photos only', () => {
+  it('uses verified Unsplash photos only in the shared live pool', () => {
     for (const id of EBannedExamplePhotoIds) {
       expect(sharedImages).not.toContain(`images.unsplash.com/${id}`)
-      expect(expoApp).not.toContain(`images.unsplash.com/${id}`)
-      expect(nativeHtml).not.toContain(`images.unsplash.com/${id}`)
     }
     expect(sharedImages).toContain('images.unsplash.com/photo-1501785888041-af3ef285b470')
   })

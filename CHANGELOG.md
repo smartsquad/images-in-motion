@@ -4,6 +4,21 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- `images-in-motion/examples` exports `pickExampleImages()` for the same random Unsplash pool as Live.
+- One console warning when `mountImagesInMotion` measures a 0×0 host.
+- `viewportWidth` / `viewportHeight` on `createImagesInMotionWebViewHtml` so iOS `source={{ html }}` can size the document to the native WebView.
+
+### Changed
+
+- Framework guide copy-paste examples are complete, runnable sources: React `App` with `return`, Vue SFCs, Expo `App`, and HTML/JS modules. Snippets define a `const images` of Picsum random URLs (`?random=`), not pinned `images.unsplash.com/photo-` IDs and not `pickExampleImages()`. Expo examples split Native (`react-native-webview`) and Web (same HTML in an `iframe`). Blocks use Shiki like the rest of VitePress. The on-page mosaic is `20rem` by `20rem`, centered, and uses a shuffled Unsplash set with at least twenty-four URLs. The Expo Snack playground sizes the native WebView with `flex: 1` and loads the IIFE from unpkg.
+- Expo install commands include `npx`, `bunx`, `yarn`, and `pnpm`.
+- React and Vue apply `width` / `height` as CSS on the host. Omit them and the host fills its parent. Framework examples fill the available box and size the mosaic to `20rem` by `20rem`. `export default function App()`.
+- `createImagesInMotionWebViewHtml` accepts an optional rem (or other CSS) size for `#stage`. Expo Native examples measure the host with `onLayout` and pass that size as `viewportWidth` / `viewportHeight`.
+- Docs `dev` and `preview` send COOP / COEP `credentialless` so in-page StackBlitz WebContainers can start. The embed passes `crossOriginIsolated: true`.
+- Snack, StackBlitz, and Load live preview open the snippet tab above the buttons. Expo Native goes to Snack. Other tabs go to StackBlitz.
+
 ## [0.2.2] - 2026-09-02
 
 ### Changed

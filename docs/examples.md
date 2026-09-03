@@ -1,6 +1,6 @@
 # Examples
 
-Live Vue mounts of the same renderer. Expo and NativeScript host that same CSS in a WebView. Images are Unsplash URLs, never blobs. Open the [studio](/studio/) to change canvas size and copy settings.
+Live Vue mounts of the same renderer. The docs stage is sized by this page, not by a library default. Expo and NativeScript host that same CSS in a WebView. Images are Unsplash URLs, never blobs. Open the [studio](/studio/) to change canvas size and copy settings. App mounts fill the available box and size the mosaic to `20rem` by `20rem`. See [API](/api#size).
 
 ## Simple vertical
 

@@ -1,6 +1,6 @@
 {
   "name": "images-in-motion",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Independent columns, opposite directions: a continuous animated image pattern for the web.",
   "license": "MIT",
   "author": "Smart Squad S.r.l. (https://smartsquad.io)",
@@ -57,6 +57,10 @@
       "types": "./dist/vue/index.d.ts",
       "import": "./dist/vue/index.js"
     },
+    "./examples": {
+      "types": "./dist/examples/index.d.ts",
+      "import": "./dist/examples/index.js"
+    },
     "./package.json": "./package.json"
   },
   "unpkg": "./dist/iife/images-in-motion.global.js",
@@ -106,6 +110,7 @@
     "happy-dom": "^18.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "shiki": "^2.1.0",
     "tsup": "^8.5.0",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.69.0",

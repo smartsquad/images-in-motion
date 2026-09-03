@@ -4,23 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Images in motion (custom element)</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        min-height: 100%;
-        background: #141313;
-      }
-
-      images-in-motion {
-        display: block;
-        width: min(480px, 100vw);
-        aspect-ratio: 3 / 4;
-      }
-    </style>
   </head>
   <body>
-    <images-in-motion angle="12" speed-range="[8,18]"></images-in-motion>
-    <script type="module" src="/src/main.ts"></script>
+    <div style="margin:0;width:100%;height:100%;min-height:100dvh;display:flex;align-items:center;justify-content:center">
+  <images-in-motion
+    id="mosaic"
+    style="width:20rem;height:20rem"
+    angle="12"
+    speed-range="[8,18]"
+  ></images-in-motion>
+</div>
+<script type="module">
+  import 'https://unpkg.com/images-in-motion'
+
+  const images = [
+    'https://picsum.photos/800/1200?random=1',
+    'https://picsum.photos/1200/800?random=2',
+    'https://picsum.photos/800/800?random=3',
+    'https://picsum.photos/1000/700?random=4',
+    'https://picsum.photos/800/1000?random=5',
+    'https://picsum.photos/700/1100?random=6',
+    'https://picsum.photos/800/1200?random=7',
+    'https://picsum.photos/1200/800?random=8',
+  ]
+
+  document.querySelector('#mosaic').setAttribute('images', JSON.stringify(images))
+</script>
+
   </body>
 </html>

@@ -22,7 +22,7 @@ bun add images-in-motion
 
 :::
 
-Give the parent a measurable size: fixed pixels, flex, or width plus aspect ratio. No size, no layout.
+Give the host a size. Examples fill the available box and size the mosaic to `20rem` by `20rem`.
 
 The renderer is framework-agnostic. Bindings only mount it. Pick a surface:
 
@@ -49,4 +49,4 @@ The [studio](/studio/) copies settings to the clipboard. The payload never inclu
 
 ## Bundle size
 
-The CDN IIFE is 16.08 KB minified, 5.97 KB gzip -9. Exact bytes, other entries, and how to re-measure: [Bundle size](/size).
+The CDN IIFE is 17.38 KB minified, 6.48 KB gzip -9. Exact bytes, other entries, and how to re-measure: [Bundle size](/size).
