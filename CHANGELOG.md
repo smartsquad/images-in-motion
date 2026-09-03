@@ -4,6 +4,8 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-03
+
 ### Added
 
 - `images-in-motion/examples` exports `pickExampleImages()` for the same random Unsplash pool as Live.
@@ -16,6 +18,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - Expo install commands include `npx`, `bunx`, `yarn`, and `pnpm`.
 - React and Vue apply `width` / `height` as CSS on the host. Omit them and the host fills its parent. Framework examples fill the available box and size the mosaic to `20rem` by `20rem`. `export default function App()`.
 - `createImagesInMotionWebViewHtml` accepts an optional rem (or other CSS) size for `#stage`. Expo Native examples measure the host with `onLayout` and pass that size as `viewportWidth` / `viewportHeight`.
+- Recorded IIFE size is 17.38 KB raw, 6.47 KB gzip -9.
 - Docs `dev` and `preview` send COOP / COEP `credentialless` so in-page StackBlitz WebContainers can start. The embed passes `crossOriginIsolated: true`.
 - Snack, StackBlitz, and Load live preview open the snippet tab above the buttons. Expo Native goes to Snack. Other tabs go to StackBlitz.
 
@@ -34,5 +37,6 @@ All notable changes to this project are documented here. The format follows [Kee
 - Imported the first release from the private repository of `images-in-motion`
 - Added temporary "open" functionality in StackBlitz on the React, Vue, JavaScript, and custom element guides, with an optional click-to-load live preview. Expo opens Snack on a device. NativeScript links to NativeScript Preview.
 
-[Unreleased]: https://github.com/smartsquad/images-in-motion/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/smartsquad/images-in-motion/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/smartsquad/images-in-motion/releases/tag/v1.0.0
 [0.2.2]: https://github.com/smartsquad/images-in-motion/releases/tag/v0.2.2

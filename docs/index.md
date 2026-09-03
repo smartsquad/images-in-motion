@@ -23,7 +23,7 @@ features:
   - title: Image-free JSON
     details: Studio copies the props object. Image URLs never leave the browser.
     link: /export
-  - title: 6.48 KB gzip
+  - title: 6.47 KB gzip
     details: Minified IIFE, gzip -9. React and Vue are optional. Expo and NativeScript load this file in a WebView.
     link: /size
 ---

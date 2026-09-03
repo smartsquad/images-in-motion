@@ -49,4 +49,4 @@ The [studio](/studio/) copies settings to the clipboard. The payload never inclu
 
 ## Bundle size
 
-The CDN IIFE is 17.38 KB minified, 6.48 KB gzip -9. Exact bytes, other entries, and how to re-measure: [Bundle size](/size).
+The CDN IIFE is 17.38 KB minified, 6.47 KB gzip -9. Exact bytes, other entries, and how to re-measure: [Bundle size](/size).
