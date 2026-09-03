@@ -1,0 +1,26 @@
+{
+  "name": "Images in motion",
+  "short_name": "Images in motion",
+  "description": "Open-source JS library for displaying independent columns, opposite directions: a continuous animated image pattern for the web.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F3EFE8",
+  "theme_color": "#F3EFE8",
+  "icons": [
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

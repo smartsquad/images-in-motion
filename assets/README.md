@@ -15,8 +15,10 @@ SVG files are the source of truth. Docs and studio serve them from `docs/public/
 - `logo.svg`: default dark rounded mark-only logo alias.
 - `favicon-dark.svg` and `favicon-light.svg`: compact 64 × 64 theme sources.
 - `favicon.svg`: dark fallback favicon.
-- `og/`: social preview source. `bun run og:dev` mounts the documentation Unsplash mosaic. Export `?p=stage` to replace `og.png`.
-- `og.png`: official 1200 × 630 social preview (proposal C).
+- `favicon.ico`, `favicon-32x32.png`, `apple-touch-icon.png`: raster icons for Google and iOS. Render from `favicon.svg`.
+- `og/`: social preview source. `bun run og:dev` mounts the documentation Unsplash mosaic. Export `?p=stage` to replace `og.png`, then compress to `og.jpg`.
+- `og.png`: 1200 × 630 source (proposal C).
+- `og.jpg`: 1200 × 630 social file under 500 KB for WhatsApp and OG checkers.
 - VitePress logos: `docs/public/logo-light.svg` and `logo-dark.svg` point at `mark-light-rounded.svg` and `mark-dark-rounded.svg`.
 
 ## Geometry

@@ -12,8 +12,16 @@ import { frameworkNavItems, frameworkSidebarItems } from './frameworks'
 
 const ESiteOrigin = 'https://iim.smartsquad.io'
 const EBase = '/'
+const ESiteDescription = 'Open-source JS library for displaying independent columns, opposite directions: a continuous animated image pattern for the web.'
+const EOgImage = `${ESiteOrigin}/og.jpg`
+const EOgImageAlt = 'Open-source JS library for displaying independent columns, opposite directions: a continuous animated image pattern for the web.'
 const EPublicAsset = (file: string) => `${EBase}${file}`
 const ESrc = (relative: string) => fileURLToPath(new URL(relative, import.meta.url))
+
+function pageCanonicalUrl(relativePath: string): string {
+  const path = relativePath.replace(/index\.md$/, '').replace(/\.md$/, '.html')
+  return `${ESiteOrigin}/${path}`
+}
 
 /** StackBlitz WebContainers need a cross-origin isolated parent. `credentialless` keeps Unsplash and other no-cors assets loadable. */
 const ECrossOriginIsolationHeaders = {
@@ -56,21 +64,76 @@ function copyIifeToDocsPublic(): Plugin {
 export default defineConfig({
   lang: 'en-US',
   title: 'Images in motion',
-  description: 'Independent columns. Opposite directions. A continuous image pattern for the web.',
+  description: ESiteDescription,
   base: EBase,
   outDir: '.vitepress/dist',
   cacheDir: '.vitepress/cache',
   cleanUrls: false,
   lastUpdated: false,
   appearance: true,
+  sitemap: {
+    hostname: ESiteOrigin,
+  },
+  transformPageData(pageData) {
+    const url = pageCanonicalUrl(pageData.relativePath)
+    pageData.frontmatter.head ??= []
+    pageData.frontmatter.head.push(
+      ['link', { rel: 'canonical', href: url }],
+      ['meta', { property: 'og:url', content: url }],
+    )
+  },
   head: [
+    ['link', { rel: 'icon', href: EPublicAsset('favicon.ico'), sizes: 'any' }],
+    ['link', { rel: 'icon', href: EPublicAsset('favicon-32x32.png'), type: 'image/png', sizes: '32x32' }],
     ['link', { rel: 'icon', href: EPublicAsset('favicon.svg'), type: 'image/svg+xml' }],
     ['link', { rel: 'icon', href: EPublicAsset('favicon-light.svg'), type: 'image/svg+xml', media: '(prefers-color-scheme: light)' }],
     ['link', { rel: 'icon', href: EPublicAsset('favicon-dark.svg'), type: 'image/svg+xml', media: '(prefers-color-scheme: dark)' }],
+    ['link', { rel: 'apple-touch-icon', href: EPublicAsset('apple-touch-icon.png'), sizes: '180x180' }],
+    ['link', { rel: 'manifest', href: EPublicAsset('site.webmanifest') }],
+    ['meta', { name: 'theme-color', content: '#F3EFE8', media: '(prefers-color-scheme: light)' }],
+    ['meta', { name: 'theme-color', content: '#141313', media: '(prefers-color-scheme: dark)' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: 'Images in motion' }],
+    ['meta', { property: 'og:locale', content: 'en_US' }],
     ['meta', { property: 'og:title', content: 'Images in motion' }],
-    ['meta', { property: 'og:description', content: 'Independent columns. Opposite directions. A continuous image pattern for the web.' }],
-    ['meta', { property: 'og:image', content: `${ESiteOrigin}/og.png` }],
-    ['meta', { name: 'twitter:image', content: `${ESiteOrigin}/og.png` }],
+    ['meta', { property: 'og:description', content: ESiteDescription }],
+    ['meta', { property: 'og:image', content: EOgImage }],
+    ['meta', { property: 'og:image:type', content: 'image/jpeg' }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { property: 'og:image:alt', content: EOgImageAlt }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:site', content: '@massimodeluisa' }],
+    ['meta', { name: 'twitter:title', content: 'Images in motion' }],
+    ['meta', { name: 'twitter:description', content: ESiteDescription }],
+    ['meta', { name: 'twitter:image', content: EOgImage }],
+    ['meta', { name: 'twitter:image:alt', content: EOgImageAlt }],
+    ['script', { type: 'application/ld+json' }, JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebSite',
+          name: 'Images in motion',
+          url: `${ESiteOrigin}/`,
+          description: ESiteDescription,
+          publisher: {
+            '@type': 'Organization',
+            name: 'Smart Squad S.r.l.',
+            url: 'https://smartsquad.io',
+          },
+        },
+        {
+          '@type': 'SoftwareSourceCode',
+          name: 'images-in-motion',
+          description: ESiteDescription,
+          codeRepository: 'https://github.com/smartsquad/images-in-motion',
+          url: `${ESiteOrigin}/`,
+          programmingLanguage: 'TypeScript',
+          runtimePlatform: 'Web',
+          license: 'https://opensource.org/licenses/MIT',
+        },
+      ],
+    })],
   ],
   markdown: {
     config(md) {
