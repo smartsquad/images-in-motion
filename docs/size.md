@@ -1,11 +1,11 @@
 ---
 title: Bundle size
-description: Measured minified and compressed sizes of the images-in-motion JS renderer. No invented numbers.
+description: Measured minified and compressed sizes of the images-in-motion JS renderer.
 ---
 
 # Bundle size
 
-The published minified IIFE is **17.38 KB** (17,798 bytes). Compressed with gzip -9 it is **6.47 KB** (6,630 bytes). Brotli quality 11 is **5.83 KB** (5,972 bytes).
+The published minified IIFE is 17.38 KB (17,798 bytes). Compressed with gzip -9 it is 6.47 KB (6,630 bytes). Brotli quality 11 is 5.83 KB (5,972 bytes).
 
 That file is `dist/iife/images-in-motion.global.js`. It is the CDN bundle (`unpkg` / `jsDelivr`): the JS renderer plus `<images-in-motion>`. It does not include React, Vue, or images.
 
@@ -49,4 +49,4 @@ That is a check, not a second published file. The number on the home page is the
 bun run size
 ```
 
-That runs `bun run build`, then `scripts/bundle-size.ts` over `dist/`. If the bytes change, update this page. Do not round the home card to a number you did not measure.
+That runs `bun run build`, then `scripts/bundle-size.ts` over `dist/`. The home card uses the IIFE gzip size from this table.

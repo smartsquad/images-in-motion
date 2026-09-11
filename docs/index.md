@@ -30,7 +30,7 @@ features:
 
 ## Live
 
-The Vue binding mounts the same JS renderer used in production. Reduced motion pauses it.
+The Vue binding mounts the same JS renderer the package ships. Reduced motion pauses it.
 
 <HomeLive />
 
@@ -77,10 +77,10 @@ mountImagesInMotion(stage, {
 
 [Usage](/guide) · [Frameworks](/frameworks/) · [No frames! Pure CSS](/css) · [Image-free JSON](/export) · [Bundle size](/size) · [Examples](/examples)
 
-## Why this shape
+## How it is built
 
-1. **Pattern.** Inclined lanes scroll continuously. Speeds differ between lanes, stay constant within a lane, and a phase offset keeps rows from lining up.
-2. **Component.** Geometry lives in `src/core`. Animation lives in `src/js`. React and Vue only mount that renderer. Expo and NativeScript host it in a WebView.
-3. **[Studio](/studio/).** Tunes canvas, speed, inclination, fit, and overlay, then copies image-free JSON props.
+Inclined lanes scroll without stopping. Speed stays constant inside a lane and differs from its neighbours. A phase offset keeps rows from lining up.
 
-Tune it in the [studio](/studio/), or copy a study from [examples](/examples).
+Geometry lives in `src/core`. Animation lives in `src/js`. React and Vue only mount that renderer. Expo and NativeScript host it in a WebView.
+
+The [studio](/studio/) tunes canvas, speed, inclination, fit, and overlay, then copies image-free JSON props. Or copy a study from [examples](/examples).

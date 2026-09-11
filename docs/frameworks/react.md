@@ -5,7 +5,7 @@ description: Mount ImagesInMotion from images-in-motion/react. The binding only 
 
 # React
 
-Import from `images-in-motion/react`. React is an optional peer (`>=18`).
+Import `ImagesInMotion` from `images-in-motion/react`. React is an optional peer (`>=18`).
 
 Props match `mountImagesInMotion`. Changing them calls `handle.update`. Unmount calls `destroy`.
 

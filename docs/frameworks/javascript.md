@@ -5,7 +5,7 @@ description: Mount the renderer with mountImagesInMotion from the images-in-moti
 
 # JavaScript
 
-`images-in-motion` is the JS entry. Import `mountImagesInMotion` and pass a host. Examples fill the available box. The host is `20rem` by `20rem`. The second argument is the options object. There is no `<ImagesInMotion>` component.
+Import `mountImagesInMotion` from `images-in-motion` and pass a host. Examples fill the available box. The host is `20rem` by `20rem`. The second argument is the options object. There is no `<ImagesInMotion>` component.
 
 <FrameworkExample id="javascript" />
 

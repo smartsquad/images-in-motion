@@ -5,7 +5,7 @@ description: Mount ImagesInMotion from images-in-motion/vue. The binding only ca
 
 # Vue
 
-Vue 3 binding. Import from `images-in-motion/vue`. Vue is an optional peer (`>=3.4`).
+Import `ImagesInMotion` from `images-in-motion/vue`. Vue is an optional peer (`>=3.4`).
 
 The default slot sits above the decorative layer.
 

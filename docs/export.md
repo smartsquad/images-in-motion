@@ -5,7 +5,7 @@ description: Studio copies the renderer props object. Image URLs and blob URLs n
 
 # Image-free JSON
 
-The [studio](/studio/) **Copy settings to clipboard** control writes the renderer `props` object. Paste it into a file or spread it onto a mount. It is not a project archive, not a zip of photos, and not a dump of the preview.
+The [studio](/studio/) **Copy settings to clipboard** control writes the renderer `props` object. Paste it into a file or spread it onto a mount.
 
 Images chosen in the studio stay in this browser. Blob URLs from file picks are never written. Remote Unsplash URLs used as examples are never written either.
 

@@ -5,7 +5,7 @@ description: Host the CSS renderer in an Expo WebView. No react-native-web, no R
 
 # Expo
 
-There is no React Native port. Geometry stays in `src/core`. Animation stays in `src/js`. Expo hosts that DOM renderer in a native [WebView](https://docs.expo.dev/versions/latest/sdk/webview/) on iOS and Android.
+Expo hosts the CSS renderer in a native [WebView](https://docs.expo.dev/versions/latest/sdk/webview/) on iOS and Android. Geometry stays in `src/core`. Animation stays in `src/js`. There is no React Native port.
 
 `expo start --web` is a browser. `react-native-webview` does not run there. It prints `React Native WebView does not support this platform` and stays blank. Use the Web tab: the same HTML in an `iframe`. Use the Native tab in Expo Go, iOS, or Android.
 

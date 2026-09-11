@@ -5,9 +5,7 @@ description: Motion is one CSS @keyframes translate per lane. No requestAnimatio
 
 # No frames! Pure CSS
 
-The pattern does not animate by drawing frames in JavaScript. There is no `requestAnimationFrame` loop, no `<canvas>` redraw, and no React or Vue render on every tick.
-
-Geometry is computed once per size and options (`src/core`). The DOM renderer (`src/js`) injects a stylesheet and gives each lane a CSS animation. The browser composites those transforms.
+Each lane moves with one CSS `@keyframes` translate. Geometry is computed once per size and options (`src/core`). The DOM renderer (`src/js`) injects a stylesheet and gives each lane a CSS animation. The browser composites those transforms. JavaScript does not run a `requestAnimationFrame` loop or redraw a canvas, and React and Vue do not render on every tick.
 
 ## What moves
 
@@ -67,9 +65,9 @@ The same `translate3d` `@keyframes` (`iim-scroll` / `iim-scroll-x`) run inside t
 
 Mount surfaces: [Frameworks](/frameworks/).
 
-## What this is not
+## Compared with a JS frame loop
 
-| Not this | This instead |
+| Alternative | This library |
 | --- | --- |
 | `requestAnimationFrame` + style writes | CSS `@keyframes` |
 | Canvas or WebGL | DOM tiles and CSS transforms |

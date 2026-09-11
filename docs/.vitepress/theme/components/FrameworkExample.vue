@@ -97,7 +97,7 @@ onMounted(async () => {
           :class="['language-' + tab.lang, 'vp-adaptive-theme', { active: index === activeTab }]"
         >
           <button
-            title="Copy Code"
+            title="Copy code"
             class="copy"
             type="button"
             @click="copyCode($event, tab.code)"

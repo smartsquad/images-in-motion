@@ -3,7 +3,7 @@ export type TImagesInMotionMotionAxis = 'vertical' | 'horizontal'
 export type TImagesInMotionTileFit = 'auto' | 'static' | 'dynamic' | 'fixed'
 export type TImagesInMotionObjectFit = 'cover' | 'fill'
 
-/** Presentation options shared by every renderer. */
+/** Options every mount accepts. */
 export interface IImagesInMotionOptions {
   /** Logical pixels per second, clamped to 0.1–1000; sorted endpoints default to [8, 18]. */
   speedRange?: readonly [number, number]
@@ -15,7 +15,7 @@ export interface IImagesInMotionOptions {
   tileAspectRatio?: number
   /** Space between tiles and lanes, clamped to 0–1024. Defaults to 4. */
   gap?: number
-  /** Overlay opacity; undefined omits the overlay entirely. */
+  /** Overlay opacity. Omit the prop to skip the overlay. */
   overlayOpacity?: number
   /** Overlay fill. Hex `#rgb` or `#rrggbb`; defaults to `#000000`. */
   overlayColor?: string

@@ -20,7 +20,7 @@ export const EFrameworkGuides = [
     text: 'Vue',
     link: '/frameworks/vue',
     icon: '\u{f0844}', // nf-md-vuejs U+F0844
-    detail: 'images-in-motion/vue for Vue 3. Bindings do not reimplement geometry.',
+    detail: 'images-in-motion/vue for Vue 3. The binding does not reimplement geometry.',
   },
   {
     id: 'expo',

@@ -1,6 +1,6 @@
 # Brand assets
 
-The Phase Cuts mark derives from the original three-column favicon. The columns share the same top and bottom bounds. Their internal cuts sit at different heights to express independent motion without losing the compact three-lane silhouette.
+The Phase Cuts mark comes from the original three-column favicon. The columns share the same top and bottom bounds. Their internal cuts sit at different heights so the three lanes read as independent motion, while the silhouette stays compact.
 
 SVG files are the source of truth. Docs and studio serve them from `docs/public/` and `studio/public/` through relative symlinks into this folder. They do not vendor copies.
 

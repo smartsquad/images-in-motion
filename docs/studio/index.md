@@ -4,7 +4,7 @@ sidebar: false
 aside: false
 footer: false
 title: Studio
-description: Configure Images in motion and copy image-free JSON settings.
+description: Tune the mosaic in the browser and copy image-free JSON props.
 ---
 
 <StudioEmbed />

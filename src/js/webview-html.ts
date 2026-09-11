@@ -36,7 +36,7 @@ function cssViewportPx(value: unknown): number | undefined {
   return Math.round(value)
 }
 
-/** HTML document for a native WebView. Loads the IIFE and mounts `iimOptions`. */
+/** Full HTML document for a native WebView: IIFE script plus `iimOptions` mount. */
 export function createImagesInMotionWebViewHtml(
   options: IImagesInMotionMountOptions,
   scriptSrc = EImagesInMotionIifeSrc,

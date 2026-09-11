@@ -1,8 +1,6 @@
 # Contributing
 
-Thanks for improving Images in motion.
-
-> Rules live in [CONVENTIONS.md](./CONVENTIONS.md). Agent entrypoint: [AGENTS.md](./AGENTS.md).
+Rules live in [CONVENTIONS.md](./CONVENTIONS.md). Agent entrypoint: [AGENTS.md](./AGENTS.md).
 
 ## Before you start
 

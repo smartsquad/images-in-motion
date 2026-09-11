@@ -5,7 +5,7 @@ description: Use the images-in-motion custom element from a module import or a C
 
 # Custom element
 
-Tag: `images-in-motion`. Importing `images-in-motion` defines it. You can also load the IIFE from unpkg or jsDelivr.
+The tag is `images-in-motion`. Importing `images-in-motion` defines it. You can also load the IIFE from unpkg or jsDelivr.
 
 The tag reads HTML attributes only. It cannot take a JavaScript `iimOptions` object. Keep attributes, or mount from a script with the [JavaScript](/frameworks/javascript) API.
 

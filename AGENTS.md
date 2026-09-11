@@ -52,3 +52,8 @@ bun run og:dev
 - No invented pixel size. React/Vue fill a sized parent with CSS `100%` (never HTML attributes). Examples fill the available box and size the mosaic to `20rem` by `20rem`. Warn on 0×0. Do not add a hidden fallback box.
 - Framework copy-paste snippets define `const images = [...]` with Picsum random URLs (`https://picsum.photos/...?random=N`). Never `pickExampleImages`, never `images-in-motion/examples` in snippets, never static `images.unsplash.com/photo-` IDs. Live mosaics use the verified Unsplash pool from `src/example-images.ts`.
 - Framework snippets must be complete runnable sources (React `App` with `return`, Vue SFC, Expo `App`, etc.), not fragments. Props and Options tabs both. Framework docs order: React, Vue, Expo, NativeScript, JavaScript, Custom element.
+- Site meta, Open Graph, Twitter, and image alt copy must say what the library does. Use: "Open-source JS library for displaying independent columns, opposite directions: a continuous animated image pattern for the web." Do not invent new description or alt text.
+
+## Learned Workspace Facts
+
+- No-install JS uses the IIFE from unpkg (`https://unpkg.com/images-in-motion`); jsDelivr is the alternate. Do not load runtime from `https://iim.smartsquad.io/images-in-motion.global.js`.

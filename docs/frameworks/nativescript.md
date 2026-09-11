@@ -5,7 +5,7 @@ description: Host the images-in-motion custom element in a NativeScript WebView.
 
 # NativeScript
 
-There is no NativeScript view. The renderer needs a DOM. Put the mosaic in a [WebView](https://docs.nativescript.org/ui/web-view). Examples fill the WebView. The element is `20rem` by `20rem`.
+Put the mosaic in a [WebView](https://docs.nativescript.org/ui/web-view). The renderer needs a DOM, and NativeScript has no native view for it. Examples fill the WebView. The element is `20rem` by `20rem`.
 
 The same `translate3d` `@keyframes` run inside that WebView. See [No frames! Pure CSS](/css).
 

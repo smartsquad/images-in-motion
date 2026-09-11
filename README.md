@@ -40,9 +40,11 @@
 
 ## What it does
 
-1. **Pattern.** Each inclined column scrolls continuously in the opposite direction to its neighbours. Speeds differ between columns but stay constant within a column. A deterministic phase offset avoids synchronized rows.
-2. **Component.** The renderer is plain DOM and CSS animations. React and Vue are thin bindings around that same mount. Expo and NativeScript host that same CSS renderer in a WebView. There is no React Native or NativeScript view port, and no per-frame React render.
-3. **Studio.** The [public configurator](https://iim.smartsquad.io/studio/) tunes canvas, speed, inclination, tiles and overlay, then copies settings to the clipboard. Images never leave the browser.
+Each inclined column scrolls continuously, opposite its neighbours. Speeds differ between columns and stay constant within a column. A deterministic phase offset keeps rows from lining up.
+
+The renderer is plain DOM and CSS animations. React and Vue are thin bindings around that same mount. Expo and NativeScript host it in a WebView. There is no React Native or NativeScript view port, and no per-frame React render.
+
+The [public configurator](https://iim.smartsquad.io/studio/) tunes canvas, speed, inclination, tiles, and overlay, then copies settings to the clipboard. Images never leave the browser.
 
 ## Install
 

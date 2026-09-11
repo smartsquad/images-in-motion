@@ -1,4 +1,4 @@
-/** Pause and resume ease. Scroll stays on CSS keyframes; only the rate ramps. */
+/** Pause and resume ease. Scroll stays on CSS keyframes. Only the rate ramps. */
 export const EImagesInMotionPlaybackRampMs = 520
 
 export function playbackRampT(elapsedMs: number, durationMs: number): number {

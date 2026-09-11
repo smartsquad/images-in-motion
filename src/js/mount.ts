@@ -219,7 +219,7 @@ function readPlaybackRate(animation: Animation): number {
 
 const EEmptyHostWarning = 'images-in-motion: host is 0x0. Set an explicit CSS size (for example 20rem by 20rem).'
 
-/** Mounts the decorative pattern into `host`. A 0x0 host stays invisible. */
+/** Mounts the pattern into `host`. A 0×0 host stays invisible. */
 export function mountImagesInMotion(
   host: HTMLElement,
   options: IImagesInMotionMountOptions,

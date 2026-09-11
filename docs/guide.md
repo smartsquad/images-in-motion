@@ -1,6 +1,6 @@
 # Install and usage
 
-Package name: `images-in-motion`. Component name: `ImagesInMotion`.
+Install `images-in-motion`, size a host, then mount. Package name: `images-in-motion`. Component name: `ImagesInMotion`.
 
 ::: code-group
 
@@ -35,7 +35,7 @@ The renderer is framework-agnostic. Bindings only mount it. Pick a surface:
 
 Expo and NativeScript host that same CSS renderer in a WebView. There is no native mosaic.
 
-See the [frameworks hub](/frameworks/) for a short map. How the motion runs in CSS, not a JS frame loop: [No frames! Pure CSS](/css).
+See the [frameworks hub](/frameworks/) for a short map. Motion is CSS, not a JS frame loop: [No frames! Pure CSS](/css).
 
 ## Pause and motion preference
 

@@ -1,6 +1,6 @@
 # API
 
-Options are defined in `src/core/layout.ts` and exported through every mount. JSON export is `createImagesInMotionSettingsExport` in `src/core/settings.ts`.
+Every mount takes these options. They are defined in `src/core/layout.ts`. JSON export is `createImagesInMotionSettingsExport` in `src/core/settings.ts`.
 
 ## Size
 
@@ -37,7 +37,7 @@ Give the host a size. Examples fill the available box and size the mosaic to `20
 
 ## Image fit
 
-| `tileFit` | Behaviour |
+| `tileFit` | Behavior |
 | --- | --- |
 | `fixed` | Tile width and `tileAspectRatio`, `object-fit: cover`. |
 | `auto` | Each image keeps its own aspect. |

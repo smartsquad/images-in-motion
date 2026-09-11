@@ -536,7 +536,7 @@ export function StudioApp({ embed = false }: { embed?: boolean }) {
                 animateOnHover={settings.hoverPlayback === 'animate'}
                 data-testid="images-in-motion.preview"
               />
-              {images.length === 0 && <div className="empty-state">No images selected<span>The component remains empty.</span></div>}
+              {images.length === 0 && <div className="empty-state">No images selected<span>The stage stays empty until you add files.</span></div>}
             </div>
           </div>
           <footer className="preview-footer"><span>{settings.width} × {settings.height} · Shrinks if the stage is smaller</span><span>{images.length} image{images.length === 1 ? '' : 's'} · {settings.angle}°</span></footer>
@@ -545,7 +545,7 @@ export function StudioApp({ embed = false }: { embed?: boolean }) {
           <div className="controls-heading">
             <h2>
               <span className="nf" aria-hidden="true">{ETuneGlyph}</span>
-              Make it yours
+              Controls
             </h2>
             <div className="controls-actions">
               <button type="button" className="text-button" title="Reset" onClick={reset}>
@@ -561,7 +561,7 @@ export function StudioApp({ embed = false }: { embed?: boolean }) {
           <span className="export-feedback" role="status" aria-live="polite">{exportFeedback}</span>
           <fieldset className="canvas-fieldset">
             <legend>Canvas preview</legend>
-            <p className="fieldset-lead">Preview host only: width and height are the canvas size, then shrink to fit the stage. Corners are circular. Full screen opens the preview on the whole screen. CSS on this page, not library props, omitted from JSON.</p>
+            <p className="fieldset-lead">Width, height, corners, background, and full screen are CSS on this preview. They are not library props, and they do not go into JSON. The canvas shrinks if the stage is smaller.</p>
             <div className={`preset-buttons is-icons${customCanvasSize ? ' has-custom' : ''}`}>
               {EPresets.map(({ name, width, height, glyph }) => {
                 const label = `${name} ${width} × ${height}`
@@ -724,7 +724,7 @@ export function StudioApp({ embed = false }: { embed?: boolean }) {
               ))}
             </div>
             <div className="image-actions">
-              <label className="upload-button" title="Choose your images">Choose your images<input aria-label="Choose your images" type="file" accept="image/*,image/svg+xml,.svg" multiple onChange={(event) => {
+              <label className="upload-button" title="Add images">Add images<input aria-label="Add images" type="file" accept="image/*,image/svg+xml,.svg" multiple onChange={(event) => {
                 const files = Array.from(event.target.files ?? []).filter(isImageFile)
                 event.target.value = ''
                 if (files.length === 0) {
@@ -747,7 +747,7 @@ export function StudioApp({ embed = false }: { embed?: boolean }) {
           </fieldset>
         </form>
       </div>
-      <p className="page-note">Reduced motion is respected automatically. Pause eases to a freeze. Stop on hover and animate on hover cancel each other. Both off keeps continuous motion.</p>
+      <p className="page-note">Reduced motion pauses the CSS animation. Pause eases to a freeze. Stop on hover and animate on hover cancel each other. Both off keeps continuous motion.</p>
     </main>
   )
 }

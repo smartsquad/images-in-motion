@@ -39,7 +39,7 @@ export type IImagesInMotionSettingsExport = TImagesInMotionRequiredOptions & {
   animateOnHover?: true
 }
 
-/** Creates the stable, image-free props payload exported by the motion study. */
+/** Image-free props object for the studio clipboard copy. */
 export function createImagesInMotionSettingsExport(
   input: IImagesInMotionSettingsInput,
 ): IImagesInMotionSettingsExport {

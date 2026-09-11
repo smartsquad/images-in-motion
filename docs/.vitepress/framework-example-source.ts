@@ -5,7 +5,7 @@ import {
 } from '../../src/example-images'
 import type { TPlaygroundId } from './playground'
 
-/** Copy-paste lists. Live and the on-page mosaic shuffle at least 24. */
+/** Picsum URLs for copy-paste snippets. Live mosaics shuffle at least 24 Unsplash URLs. */
 export const EFrameworkExampleImageCount = 8
 
 export const EFrameworkExampleLiveImageCount = 24
