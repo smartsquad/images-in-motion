@@ -1,6 +1,6 @@
 {
   "name": "images-in-motion",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Open-source JS library for displaying independent columns, opposite directions: a continuous animated image pattern for the web.",
   "license": "MIT",
   "author": "Smart Squad S.r.l. (https://smartsquad.io)",

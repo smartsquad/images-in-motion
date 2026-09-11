@@ -4,6 +4,8 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-09-11
+
 ### Changed
 
 - Docs and studio social preview use a 1200 × 630 JPEG under 500 KB, plus Open Graph, Twitter Card, canonical, favicon, and JSON-LD tags that OG checkers expect.
