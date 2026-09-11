@@ -8,6 +8,7 @@ All notable changes to this project are documented here. The format follows [Kee
 
 - Docs and studio social preview use a 1200 × 630 JPEG under 500 KB, plus Open Graph, Twitter Card, canonical, favicon, and JSON-LD tags that OG checkers expect.
 - Bumped the `happy-dom` test environment from 18 to 20.13.2 (CVE-2025-61927, CVE-2026-33943, CVE-2026-34226).
+- Minor libraries update
 
 ## [1.0.0] - 2026-09-03
 
