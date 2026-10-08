@@ -10,7 +10,7 @@
 <p align="center">
   <img src=".github/assets/mosaic.gif" alt="Inclined columns of the images-in-motion mosaic, each scrolling opposite its neighbors" width="280">
   <br>
-  <a href=".github/assets/mosaic.mp4">MP4 of the same 5 second loop</a>
+  <a href=".github/assets/mosaic.mp4">MP4 of the same loop (4.83 s)</a>
 </p>
 
 <p align="center">

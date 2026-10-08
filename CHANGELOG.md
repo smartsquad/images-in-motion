@@ -8,7 +8,7 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ### Changed
 
-- README shows a 5 second loop of the live docs mosaic under the title, plus an MP4 of the same crop.
+- README shows a 4.88 second GIF of the live docs mosaic under the title, plus a 4.83 second MP4 of the same crop.
 - README links CONTRIBUTING.md.
 - package.json description is "Image mosaic where each inclined column scrolls opposite its neighbors, driven by CSS keyframes. JS, custom element, React and Vue."
 
