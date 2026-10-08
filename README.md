@@ -8,6 +8,12 @@
 <h1 align="center">Images in motion</h1>
 
 <p align="center">
+  <img src=".github/assets/mosaic.gif" alt="Inclined columns of the images-in-motion mosaic, each scrolling opposite its neighbors" width="280">
+  <br>
+  <a href=".github/assets/mosaic.mp4">MP4 of the same loop (4.83 s)</a>
+</p>
+
+<p align="center">
   <strong>Independent columns. Opposite directions.</strong><br />
   A continuous image pattern for the web, in any proportion
 </p>
@@ -248,6 +254,10 @@ Implemented by [Massimo De Luisa](https://deluisa.me).
 </p>
 
 Published by [Smart Squad Srl](https://smartsquad.io).
+
+## Contributing
+
+Local setup, checks, and pull requests are in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
