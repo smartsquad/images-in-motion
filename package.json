@@ -1,7 +1,7 @@
 {
   "name": "images-in-motion",
   "version": "1.0.1",
-  "description": "Open-source JS library for displaying independent columns, opposite directions: a continuous animated image pattern for the web.",
+  "description": "Image mosaic where each inclined column scrolls opposite its neighbors, driven by CSS keyframes. JS, custom element, React and Vue.",
   "license": "MIT",
   "author": "Smart Squad S.r.l. (https://smartsquad.io)",
   "publishConfig": {

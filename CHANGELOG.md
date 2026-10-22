@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.0.2] - TODO
+
+### Changed
+
+- README shows a 4.88 second GIF of the live docs mosaic under the title, plus a 4.83 second MP4 of the same crop.
+- README links CONTRIBUTING.md.
+- package.json description is "Image mosaic where each inclined column scrolls opposite its neighbors, driven by CSS keyframes. JS, custom element, React and Vue."
+
 ## [1.0.1] - 2026-09-11
 
 ### Changed
@@ -45,6 +53,8 @@ All notable changes to this project are documented here. The format follows [Kee
 - Imported the first release from the private repository of `images-in-motion`
 - Added temporary "open" functionality in StackBlitz on the React, Vue, JavaScript, and custom element guides, with an optional click-to-load live preview. Expo opens Snack on a device. NativeScript links to NativeScript Preview.
 
-[Unreleased]: https://github.com/smartsquad/images-in-motion/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/smartsquad/images-in-motion/compare/v1.0.1...HEAD
+[1.0.2]: https://github.com/smartsquad/images-in-motion/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/smartsquad/images-in-motion/releases/tag/v1.0.1
 [1.0.0]: https://github.com/smartsquad/images-in-motion/releases/tag/v1.0.0
 [0.2.2]: https://github.com/smartsquad/images-in-motion/releases/tag/v0.2.2
